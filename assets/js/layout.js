@@ -10,7 +10,7 @@ const SIDEBAR_FALLBACK = `
     </a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar-nav">
-      <span class="nav-toggle-icon" aria-hidden="true">⮟</span>
+      <span class="nav-toggle-icon" aria-hidden="true">▼</span>
       <span class="sr-only">Ouvrir la navigation</span>
     </button>
   </div>
@@ -23,7 +23,7 @@ const SIDEBAR_FALLBACK = `
     </nav>
 
     <div class="sidebar-actions">
-      <a class="sidebar-button" href="Docs/CV_EL_BOUFFI.pdf" target="_blank" rel="noopener" download="CV_EL_BOUFFI.pdf">Consulter le CV</a>
+      <a class="sidebar-button" href="Docs/CV_EL_BOUFFI.pdf" target="_blank" rel="noopener" download="CV_EL_BOUFFI.pdf">Télécharger le CV</a>
       <a class="sidebar-contact" href="contact.html" data-nav="contact">Contact</a>
     </div>
 
