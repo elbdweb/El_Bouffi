@@ -961,3 +961,291 @@ body[data-page="contact"] .contact-card-row .quick-value {
     width: 100%;
   }
 }
+
+
+@media (max-width: 640px) and (orientation: portrait) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .content-shell {
+    padding: 14px 14px 28px;
+  }
+
+  .page-wrap {
+    gap: 16px;
+  }
+
+  .sidebar-shell {
+    padding: 14px 14px 0;
+  }
+
+  .site-sidebar {
+    gap: 16px;
+    border-radius: 26px;
+  }
+
+  .sidebar-top {
+    align-items: center;
+  }
+
+  .brand {
+    min-width: 0;
+    flex: 1;
+    padding: 4px;
+    gap: 10px;
+  }
+
+  .brand-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+  }
+
+  .brand-copy {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .brand-first {
+    font-size: 0.88rem;
+  }
+
+  .brand-last {
+    font-size: 0.98rem;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    flex: 0 0 auto;
+  }
+
+  .sidebar-nav,
+  .sidebar-actions {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .sidebar-nav a,
+  .sidebar-button,
+  .sidebar-contact {
+    min-height: 48px;
+  }
+
+  .sidebar-social {
+    gap: 14px;
+  }
+
+  .social-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+  }
+
+  .intro-hero {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .page-copy,
+  .module-content {
+    min-width: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: clamp(1.55rem, 8vw, 2rem);
+    line-height: 1.14;
+    max-width: none;
+  }
+
+  [data-page="index"] h1 {
+    font-size: clamp(1.45rem, 7.2vw, 1.85rem);
+    max-width: 16ch;
+  }
+
+  .page-copy p,
+  .card-copy,
+  .timeline-card p,
+  .module-copy,
+  .quick-card p,
+  .simple-card p,
+  .info-card p,
+  .module-card p,
+  .section-copy,
+  .formation-lead,
+  .formation-block p,
+  .formation-list,
+  body[data-page="contact"] .contact-card-row .quick-value {
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .hero-actions,
+  .card-actions,
+  .module-actions,
+  .contact-actions,
+  .footer-links {
+    gap: 10px;
+  }
+
+  .hero-actions a,
+  .card-actions a,
+  .module-actions a,
+  .contact-actions a,
+  .footer-links a {
+    width: 100%;
+  }
+
+  .hero-visual,
+  [data-page="index"] .hero-visual {
+    max-width: 100%;
+  }
+
+  .hero-visual img,
+  [data-page="index"] .hero-visual img {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .simple-card,
+  .timeline-card,
+  .quick-card,
+  .info-card,
+  .panel,
+  .module-content {
+    border-radius: 22px;
+  }
+
+  .panel,
+  .simple-card,
+  .timeline-card,
+  .quick-card,
+  .info-card {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .section-head {
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-size: 1.28rem;
+  }
+
+  .kpi {
+    font-size: 1.38rem;
+    margin-bottom: 8px;
+  }
+
+  .module-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .module-content {
+    padding-top: 22px;
+    padding-bottom: 18px;
+  }
+
+  .module-content h2 {
+    font-size: 1.3rem;
+    line-height: 1.22;
+  }
+
+  .module-content .module-subtitle {
+    font-size: 1rem;
+  }
+
+  .module-visual {
+    min-height: 220px;
+  }
+
+  .module-visual img {
+    min-height: 220px;
+    aspect-ratio: 16 / 10;
+    object-position: center;
+  }
+
+  .formation-card {
+    border-radius: 24px;
+  }
+
+  .formation-card-top,
+  .formation-detail-wrap,
+  .formation-actions {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .formation-card-top {
+    padding-top: 22px;
+    padding-bottom: 16px;
+  }
+
+  .formation-title {
+    font-size: 1.42rem;
+    line-height: 1.16;
+  }
+
+  .formation-detail-wrap {
+    gap: 14px;
+    padding-top: 16px;
+    padding-bottom: 14px;
+  }
+
+  .formation-block {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .formation-tags {
+    gap: 8px;
+  }
+
+  .formation-tags span {
+    min-height: 34px;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+  }
+
+  .quick-grid.contact-compact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card-row {
+    padding: 16px 18px;
+    gap: 12px;
+  }
+
+  .contact-card-row h2 {
+    font-size: 1rem;
+  }
+
+  .contact-actions-inline,
+  .contact-actions-inline .quick-action {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .footer-links {
+    padding-top: 10px;
+  }
+}
