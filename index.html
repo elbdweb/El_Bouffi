@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>EL BOUFFI Driss</title>
+    <link rel="icon" type="image/png" href="FrontPic/index_favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Alata" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: "Alata", sans-serif; 
+            margin: 20px; 
+            background-image: url('FrontPic/index.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center 20%; 
+        }
+        h1 { color: #fff; }
+        p { font-size: 16px; color: #000; text-align: justify; }
+        .sidebar {
+            width: 200px; 
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px 10px;
+            background-color: transparent;
+            background-image: url('FrontPic/sidebar.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .content { 
+            margin-left: 220px; 
+            max-width: 33%; /* Updated to match the text width of the other pages */
+        }
+        .sidebar ul { 
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0;
+            width: 100%;
+        }
+        .sidebar li { 
+            margin: 15px 0;
+            width: 100%;
+        }
+        .sidebar a { 
+            text-decoration: none;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            width: 160px;
+            margin-left: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .sidebar a:hover { 
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .sidebar a.no-bg {
+            background-color: transparent;
+            text-decoration: none;
+        }
+        .sidebar a.no-bg:hover {
+            background-color: transparent;
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .sidebar a img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .sidebar a.active {
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: 500;
+        }
+        .sidebar a.active:hover {
+            background-color: #f0f0f0;
+            color: #000000;
+        }
+        .content a { 
+            color: #0000FF;
+        }
+        .content a:hover { 
+            color: #000080;
+        }
+        .section { 
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><a href="index.html" class="active">Accueil</a></li>
+            <li><a href="formation.html">Formation</a></li>
+            <li><a href="pea.html">Projet d'économétrie appliquée</a></li>
+            <li><a href="marveldoc.html">Analyse Technique</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://www.linkedin.com/in/driss-el-bouffi-25a394316" target="_blank" class="no-bg"><img src="FrontPic/linkedin.png" alt="LinkedIn Logo"> LinkedIn</a></li>
+            <li><a href="https://github.com/Tsushi12" target="_blank" class="no-bg"><img src="FrontPic/github.png" alt="GitHub Logo"> GitHub</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>EL BOUFFI Driss</h1>
+        <div class="section">
+            <p>Data Analyst / Data Scientist / Programmeur, spécialisé dans le domaine de la finance. Jeune diplômé d'un Master Système d'Information Économique et Financier à l'Université de Montpellier, passionné par l'analyse de données, l'économétrie et l'informatique, j'ai développé des compétences en finance, statistiques et programmation. Ce site présente mon parcours académique, mes expériences professionnelles et mes projets significatifs.</p>
+            <p><a href="../El_Bouffi/Docs/CV_EL_BOUFFI.pdf" target="_blank">Voir mon CV</a></p>
+            <p><a href="contact.html">Me contacter</a></p>
+        </div>
+        <div class="section">
+            <h2>À Propos</h2>
+            <p>Motivé avec une formation solide en économie et finance, renforcée par des compétences techniques en data et programmation. J'ai réalisé un stage chez Septeo où j'ai conçu et développé un système automatisé de suivi et d’analyse en temps réel des coûts d’infrastructure cloud, et un autre chez Queoval pour l'analyse des besoins clients avec traitement des données adapté. Mes projets incluent des analyses financières et des modélisations de bases de données.</p>
+        </div>
+        <div class="section">
+            <h2>Formation</h2>
+            <p><a href="formation.html">Master : Système d'information économique et financier - Université de Montpellier</a></p>
+            <p>Compétences approfondies en fouille et analyse de données, économétrie et prévisions de séries temporelles, avec maîtrise des langages VBA, SQL, SAS et Python. Expérience en Machine Learning appliqué à l’analyse économique et financière, ainsi qu’en conception et modélisation de systèmes d’information. Connaissances solides en droit informatique et sécurité des données (RGPD).</p>
+            <p><a href="formation.html">Licence d'économie - Université de Montpellier</a></p>
+            <p>Connaissances solides en économie et en management, avec compétences en communication, comptabilité générale et analytique, ainsi qu’en statistiques et probabilités appliquées aux inférences. Compréhension des principes du droit des affaires.</p>
+        </div>
+        <div class="section">
+            <h2>Compétences</h2>
+            <ul>
+                <li>Bases de données (SQL, NoSQL), Big Data (Apache Spark, Databricks).</li>
+                <li>Machine Learning, programmation (Python, Java), automatisation (scripts).</li>
+                <li>API REST, DevOps (Docker, CI/CD), orchestration (Lens, Azure).</li>
+                <li>Développement web (HTML, CSS, JavaScript), Git/GitHub, déploiement (GitHub Pages).</li>
+                <li>Analyse financière (ratios, valorisation, gestion des coûts), analyse de marché, backtesting (TradingView).</li>
+                <li>Statistiques inférentielles, économétrie (ARIMA, GARCH, VAR), data visualisation (Power BI, SAS, Stata, EViews).</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Expériences Professionnelles</h2>
+            <ul>
+                <li>Septeo – Lattes | Stage de fin d’études | Mars 2025 – Août 2025<br>Conception et développement d’un système automatisé de suivi et d’analyse en temps réel des coûts d’infrastructure cloud par application et par filiale, sur hébergement souverain (PHP, Kubernetes) :
+                    <ul>
+                        <li>• Modélisation et architecture de la base de données pour la gestion des métadonnées d’infrastructure (schéma XML, normalisation et optimisation des requêtes).</li>
+                        <li>• Automatisation de la collecte, du traitement et du calcul des coûts d’infrastructure en temps réel par ressource consommée (CPU GHz, RAM Go, Go storage).</li>
+                        <li>• Mise en place d’un dashboard exploitable pour le pilotage financier, intégré à l’environnement Kubernetes/Microk8s sous Linux afin d’assurer la fiabilité et la scalabilité du reporting.</li>
+                    </ul>
+                </li>
+                <li>Queoval – Mauguio | Stage | Juillet 2024<br>Analyse des besoins clients issus de secteurs réglementés, avec traitement des données adapté :
+                    <ul>
+                        <li>• Extraction, nettoyage et structuration via SQL sous Microsoft SQL Server</li>
+                        <li>• Génération de fichiers XML pour assurer interopérabilité, traçabilité et visibilité adaptées à leur activité.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Projets Significatifs</h2>
+            <ul>
+                <li>Document : <a href="pea.html">Cycle de vie de la Nintendo Switch (analyses et prévisions pour l’année fiscale 2024)</a>.</li>
+                <li>Document : <a href="marveldoc.html">L'impact des décisions de Marvel Studios sur le cours boursier de The Walt Disney Company</a>.</li>
+                <li>Automatisation du calcul d'intérêts conformément à l’Euribor en VBA.</li>
+                <li>Document : Comparaison des recettes des films de Marvel Studios avec celles du marché du cinéma post-Covid (transfert des données via API pour Google Ads Script et Looker Studio).</li>
+                <li>Architecture d'une base de données relative aux informations du personnel de l’Université de Montpellier.</li>
+                <li>Diagnostic financier et comparaison des entreprises du secteur aérien : Air France, Ryanair et Lufthansa.</li>
+                <li>Valorisation de l'entreprise Nestlé.</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Langues</h2>
+            <ul>
+                <li>Français</li>
+                <li>Anglais - Niveau intermédiaire</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Autres Informations</h2>
+            <ul>
+                <li>Permis B</li>
+                <li>Diplôme de secourisme</li>
+                <li>Certification Voltaire</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
