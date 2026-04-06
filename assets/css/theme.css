@@ -712,11 +712,6 @@ h1 {
   .hero-visual img {
     border-radius: 28px;
   }
-
-
-  body[data-page="index"] .hero-visual {
-    display: none;
-  }
 }
 
 
@@ -964,5 +959,51 @@ body[data-page="contact"] .contact-card-row .quick-value {
 
   .contact-actions-inline .quick-action {
     width: 100%;
+  }
+}
+
+
+@media (max-width: 1180px) {
+  [data-page="index"] .intro-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-page="index"] .intro-hero {
+    gap: 18px;
+    align-items: start;
+  }
+
+  [data-page="index"] .page-copy {
+    min-width: 0;
+  }
+
+  [data-page="index"] h1 {
+    font-size: clamp(1.5rem, 7vw, 1.95rem);
+    max-width: none;
+  }
+
+  [data-page="index"] .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  [data-page="index"] .hero-actions .button,
+  [data-page="index"] .hero-actions .button-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  [data-page="index"] .hero-visual {
+    width: 100%;
+    margin: 0;
+  }
+
+  [data-page="index"] .hero-visual img {
+    width: min(100%, 320px);
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
   }
 }
