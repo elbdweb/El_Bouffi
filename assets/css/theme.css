@@ -1033,3 +1033,39 @@ body[data-page="contact"] .contact-card-row .quick-value {
     display: block;
   }
 }
+
+@media (max-width: 720px) {
+  [data-page="pea"] .module-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  [data-page="pea"] .module-content {
+    min-width: 0;
+  }
+
+  [data-page="pea"] .module-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  [data-page="pea"] .module-actions .module-action {
+    width: 100%;
+    justify-content: center;
+  }
+
+  [data-page="pea"] .module-visual {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    justify-content: center;
+  }
+
+  [data-page="pea"] .module-visual img {
+    width: min(100%, 322px);
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+}
