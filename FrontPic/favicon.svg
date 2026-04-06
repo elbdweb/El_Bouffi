@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Monogramme Driss El Bouffi">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#0f172a"/>
+  <rect x="10" y="10" width="108" height="108" rx="24" fill="url(#g)" opacity="0.18"/>
+  <path d="M34 32h21c17 0 29 12 29 31S72 94 55 94H34zm18 49c9 0 15-7 15-18s-6-18-15-18h-1v36z" fill="#ffffff"/>
+  <path d="M90 33v61H77V33z" fill="#ffffff" opacity="0.9"/>
+</svg>
