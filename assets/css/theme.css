@@ -868,6 +868,10 @@ body[data-page="formation"] .page-wrap {
   gap: 10px;
 }
 
+.formation-outils .formation-tags span {
+  border-radius: 4px;
+}
+
 .formation-tags span {
   display: inline-flex;
   align-items: center;
