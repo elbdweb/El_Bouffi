@@ -913,7 +913,13 @@ body[data-page="formation"] .button-secondary {
   }
 
   .formation-title {
-    font-size: 1.6rem;
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .formation-subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
   }
 }
 
