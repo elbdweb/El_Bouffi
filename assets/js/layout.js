@@ -6,6 +6,7 @@ const SIDEBAR_FALLBACK = `
 			<span class="marque-texte">
 				<span class="marque-prenom">Driss</span>
 				<span class="marque-nom">EL BOUFFI</span>
+				<span class="marque-indication">Revenir à l’accueil</span>
 			</span>
 		</a>
 
