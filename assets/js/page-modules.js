@@ -60,6 +60,22 @@
 		return /^#([0-9a-f]{3,8})$/i.test(normalized) ? normalized : fallback;
 	}
 
+	function animerChargementTableaux(conteneurs) {
+		const elements = conteneurs.filter(Boolean);
+		if (!elements.length) return;
+
+		elements.forEach((element, index) => {
+			element.classList.add('tableau-charge');
+			element.style.transitionDelay = `${index * 90}ms`;
+		});
+
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				elements.forEach((element) => element.classList.add('est-visible'));
+			});
+		});
+	}
+
 	function levenshtein(a, b) {
 		if (a === b) return 0;
 		if (!a.length) return b.length;
@@ -100,6 +116,14 @@
 
 			return maxDistance > 0 && levenshtein(token, candidate) <= maxDistance;
 		});
+	}
+
+
+	function initPageAccueil() {
+		if (currentPage !== 'index') return;
+
+		const cartesTableauxAccueil = Array.from(document.querySelectorAll('.carte-anneau-domaine'));
+		animerChargementTableaux(cartesTableauxAccueil);
 	}
 
 	function initCompetencesPage() {
@@ -270,19 +294,111 @@
 			return {
 				...skill,
 				_searchText: searchIndex.text,
-				_searchTokens: searchIndex.tokens
+				_searchTokens: searchIndex.tokens,
+				_competenceNormalized: normalize(skill.competence),
+				_categorieNormalized: normalize(skill.categorie),
+				_metierNormalized: normalize(skill.metier),
+				_serviceNormalized: normalize(skill.service),
+				_etablissementNormalized: normalize(skill.etablissement)
 			};
 		});
 
+		function compareAlphabetically(a, b) {
+			return a.competence.localeCompare(b.competence, 'fr', { sensitivity: 'base' });
+		}
+
+		function tokenMatchesField(token, fieldValue) {
+			if (!fieldValue) return false;
+			if (fieldValue === token) return true;
+			if (fieldValue.includes(token)) return true;
+			return fuzzyTokenMatch(token, tokenize(fieldValue));
+		}
+
 		function rowMatches(row, query) {
+			return getSkillMatchScore(row, query) !== null;
+		}
+
+		function getSkillMatchScore(row, query) {
 			const cleanedQuery = normalize(query);
-			if (!cleanedQuery) return true;
+			if (!cleanedQuery) {
+				return {
+					priority: 99,
+					subPriority: 0,
+					label: row.competence.toLowerCase()
+				};
+			}
 
 			const queryTokens = tokenize(query);
+			if (!queryTokens.length) return null;
 
-			if (row._searchText.includes(cleanedQuery)) return true;
+			const competenceExact = row._competenceNormalized === cleanedQuery;
+			const categorieExact = row._categorieNormalized === cleanedQuery;
+			const metierExact = row._metierNormalized === cleanedQuery;
+			const serviceExact = row._serviceNormalized === cleanedQuery;
+			const etablissementExact = row._etablissementNormalized === cleanedQuery;
 
-			return queryTokens.every((token) => fuzzyTokenMatch(token, row._searchTokens));
+			if (competenceExact) {
+				return {
+					priority: 0,
+					subPriority: 0,
+					label: row.competence.toLowerCase()
+				};
+			}
+
+			if (categorieExact) {
+				return {
+					priority: 1,
+					subPriority: 0,
+					label: row.competence.toLowerCase()
+				};
+			}
+
+			if (metierExact || serviceExact || etablissementExact) {
+				return {
+					priority: 2,
+					subPriority: 0,
+					label: row.competence.toLowerCase()
+				};
+			}
+
+			const tokenScores = queryTokens.map((token) => {
+				if (tokenMatchesField(token, row._competenceNormalized)) return 0;
+				if (tokenMatchesField(token, row._categorieNormalized)) return 1;
+				if (
+					tokenMatchesField(token, row._metierNormalized) ||
+					tokenMatchesField(token, row._serviceNormalized) ||
+					tokenMatchesField(token, row._etablissementNormalized)
+				) return 2;
+				if (fuzzyTokenMatch(token, row._searchTokens) || row._searchText.includes(token)) return 3;
+				return null;
+			});
+
+			if (tokenScores.some((score) => score === null)) return null;
+
+			return {
+				priority: Math.min(...tokenScores),
+				subPriority: tokenScores.reduce((sum, score) => sum + score, 0),
+				label: row.competence.toLowerCase()
+			};
+		}
+
+		function sortSkillsByRelevance(data, query) {
+			const cleanedQuery = normalize(query);
+			if (!cleanedQuery) {
+				return [...data].sort(compareAlphabetically);
+			}
+
+			return [...data].sort((a, b) => {
+				const scoreA = getSkillMatchScore(a, query);
+				const scoreB = getSkillMatchScore(b, query);
+
+				if (!scoreA && !scoreB) return compareAlphabetically(a, b);
+				if (!scoreA) return 1;
+				if (!scoreB) return -1;
+				if (scoreA.priority !== scoreB.priority) return scoreA.priority - scoreB.priority;
+				if (scoreA.subPriority !== scoreB.subPriority) return scoreA.subPriority - scoreB.subPriority;
+				return compareAlphabetically(a, b);
+			});
 		}
 
 		function renderDomainChart() {
@@ -299,7 +415,7 @@
 						<strong>${value}</strong>
 					</div>
 					<div class="competences-piste-barre">
-						<span class="competences-barre-remplissage" style="width:${(value / max) * 100}%; background:${safeCssColor(categoryColors[label], '#123f73')};"></span>
+						<span class="competences-barre-remplissage" style="--bar-width:${(value / max) * 100}%; background:${safeCssColor(categoryColors[label], '#123f73')};"></span>
 					</div>
 				</div>
 			`).join('');
@@ -377,7 +493,7 @@
 					return `
 						<span
 							class="competences-partie-pile"
-							style="height:${(value / max) * 100}%; background:${safeCssColor(categoryColors[category])};"
+							style="--stack-height:${(value / max) * 100}%; background:${safeCssColor(categoryColors[category])};"
 							title="${escapeHtml(category)} : ${value}"
 						></span>
 					`;
@@ -466,8 +582,9 @@
 		function filterSkills() {
 			const query = searchInput.value;
 			const filtered = indexedSkills.filter((row) => rowMatches(row, query));
-			renderTable(filtered);
-			updateResultsCount(filtered.length);
+			const sorted = sortSkillsByRelevance(filtered, query);
+			renderTable(sorted);
+			updateResultsCount(sorted.length);
 		}
 
 		function initSummary() {
@@ -500,6 +617,11 @@
 		renderTechnicalChart();
 		renderExperienceChart();
 		filterSkills();
+		animerChargementTableaux([
+			document.getElementById('domain-chart') && document.getElementById('domain-chart').closest('.competences-carte-graphe'),
+			document.getElementById('technical-chart') && document.getElementById('technical-chart').closest('.competences-carte-graphe'),
+			document.getElementById('experience-chart') && document.getElementById('experience-chart').closest('.competences-carte-graphe')
+		]);
 	}
 
 	function initFormationPage() {
@@ -608,7 +730,7 @@
 							<strong>${value} · ${percentage.toFixed(1).replace('.', ',')} %</strong>
 						</div>
 						<div class="formation-piste-barre">
-							<span class="formation-barre-remplissage" style="width:${percentage}%; background:${safeCssColor(categoryColors[category])};"></span>
+							<span class="formation-barre-remplissage" style="--bar-width:${percentage}%; background:${safeCssColor(categoryColors[category])};"></span>
 						</div>
 					</div>
 				`;
@@ -628,6 +750,12 @@
 			renderCategoryBars(`${config.prefix}-category-bars`, rows);
 			renderTags(`${config.prefix}-tags`, rows);
 		});
+
+		animerChargementTableaux(Array.from(document.querySelectorAll('.formation-carte .formation-bloc')));
+	}
+
+	if (currentPage === 'index') {
+		initPageAccueil();
 	}
 
 	if (currentPage === 'competences') {
