@@ -791,6 +791,18 @@ h1 {
 	object-position: center;
 }
 
+@media (max-width: 1040px) {
+	[data-page="index"] .intro-vitrine {
+		grid-template-columns: 1fr;
+		align-items: start;
+	}
+
+	[data-page="index"] .visuel-vitrine {
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+
 
 body[data-page="formation"] .conteneur-page {
 	max-width: 1240px;
