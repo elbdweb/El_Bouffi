@@ -109,7 +109,7 @@ function setupReveal() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.14 });
+  }, { threshold: 0.02 });
 
   revealItems.forEach((item) => observer.observe(item));
 }
