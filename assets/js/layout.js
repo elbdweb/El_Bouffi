@@ -1,10 +1,12 @@
-const SIDEBAR_FALLBACK = `<aside aria-label="Navigation principale" class="barre-laterale-site">
+const SIDEBAR_FALLBACK = `
+<aside aria-label="Navigation principale" class="barre-laterale-site">
 	<div class="haut-barre-laterale">
 		<a aria-label="Retour à l'accueil" class="marque lien-accueil" href="index.html">
 			<img alt="Photo de Driss El Bouffi" class="marque-photo" decoding="async" height="88" src="FrontPic/186374429.jpg" width="88"/>
 			<span class="marque-texte">
 				<span class="marque-prenom">Driss</span>
 				<span class="marque-nom">EL BOUFFI</span>
+				<span class="marque-indication">Revenir à l’accueil</span>
 			</span>
 		</a>
 		<button aria-controls="navigation-barre-laterale" aria-expanded="false" class="bascule-navigation" type="button">
@@ -41,9 +43,7 @@ const SIDEBAR_FALLBACK = `<aside aria-label="Navigation principale" class="barre
 	<div aria-hidden="true" class="media-bas-barre-laterale">
 		<img alt="" class="gif-barre-laterale" decoding="async" height="281" loading="lazy" src="FrontPic/giphy.gif" width="500"/>
 	</div>
-</aside>
-`;
-
+</aside>`;
 
 const SAFE_LINK_PROTOCOLS = new Set(['http:', 'https:', 'mailto:', 'tel:']);
 const SAFE_IMAGE_PROTOCOLS = new Set(['http:', 'https:', 'data:']);
