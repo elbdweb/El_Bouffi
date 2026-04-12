@@ -146,19 +146,6 @@ button {
 	letter-spacing: 0.04em;
 }
 
-.marque-indication {
-	display: block;
-	position: absolute;
-	right: 10px;
-	bottom: 8px;
-	margin-top: 0;
-	font-size: 0.62rem;
-	font-weight: 600;
-	line-height: 1.1;
-	white-space: nowrap;
-	text-align: right;
-	color: #62758b;
-}
 
 
 .bascule-navigation {
@@ -762,9 +749,6 @@ h1 {
 		font-size: 1.04rem;
 	}
 
-	.marque-indication {
-		font-size: 0.58rem;
-	}
 
 	h1 {
 		max-width: none;
@@ -971,7 +955,7 @@ body[data-page="formation"] .conteneur-page {
 	}
 
 	.formation-sous-titre {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		font-weight: 600;
 	}
 }
@@ -1237,7 +1221,10 @@ body[data-page="competences"] .conteneur-page {
 }
 
 .competences-partie-pile {
+	flex: 1 1 0;
 	height: 0 !important;
+	min-height: 10px;
+	border-radius: 14px 14px 8px 8px;
 	transition: height 1.05s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1518,11 +1505,6 @@ body[data-page="competences"] .conteneur-page {
 	box-shadow: inset 0 0 0 1px rgba(146, 179, 211, 0.14);
 }
 
-.competences-partie-pile {
-	flex: 1 1 0;
-	border-radius: 14px 14px 8px 8px;
-	min-height: 10px;
-}
 
 .competences-legende-en-ligne {
 	grid-template-columns: repeat(3, minmax(0, max-content));
@@ -1594,7 +1576,6 @@ body[data-page="competences"] .conteneur-page {
 }
 
 .competences-reinit {
-	border: 0;
 	border-radius: 999px;
 	padding: 10px 14px;
 	font-weight: 700;
@@ -1682,7 +1663,6 @@ body[data-page="competences"] .conteneur-page {
 .competences-bouton-info {
 	width: 42px;
 	height: 42px;
-	border: 0;
 	border-radius: 14px;
 	cursor: pointer;
 	font-weight: 800;
@@ -2204,10 +2184,6 @@ body[data-page="competences"] .conteneur-page {
 }
 
 @media (max-width: 720px) {
-	.formation-sous-titre {
-		font-size: 1rem;
-	}
-
 	.formation-carte-figure {
 		padding: 16px;
 	}

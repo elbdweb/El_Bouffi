@@ -1,55 +1,49 @@
-const SIDEBAR_FALLBACK = `
-<aside class="barre-laterale-site" aria-label="Navigation principale">
+const SIDEBAR_FALLBACK = `<aside aria-label="Navigation principale" class="barre-laterale-site">
 	<div class="haut-barre-laterale">
-		<a class="marque lien-accueil" href="index.html" aria-label="Retour à l'accueil">
-			<img class="marque-photo" src="FrontPic/186374429.jpg" alt="Photo de Driss El Bouffi" width="88" height="88" decoding="async">
+		<a aria-label="Retour à l'accueil" class="marque lien-accueil" href="index.html">
+			<img alt="Photo de Driss El Bouffi" class="marque-photo" decoding="async" height="88" src="FrontPic/186374429.jpg" width="88"/>
 			<span class="marque-texte">
 				<span class="marque-prenom">Driss</span>
 				<span class="marque-nom">EL BOUFFI</span>
-				<span class="marque-indication">Revenir à l’accueil</span>
 			</span>
 		</a>
-
-		<button class="bascule-navigation" type="button" aria-expanded="false" aria-controls="navigation-barre-laterale">
-			<span class="icone-bascule-navigation" aria-hidden="true">▼</span>
+		<button aria-controls="navigation-barre-laterale" aria-expanded="false" class="bascule-navigation" type="button">
+			<span aria-hidden="true" class="icone-bascule-navigation">▼</span>
 			<span class="masque-visuel">Ouvrir la navigation</span>
 		</button>
 	</div>
-
 	<div class="panneau-barre-laterale" id="navigation-barre-laterale">
 		<nav class="navigation-barre-laterale">
 			<p class="etiquette-barre-laterale">Portfolio</p>
-			<a href="competences.html" data-nav="competences">Compétences</a>
-			<a href="formation.html" data-nav="formation">Formation</a>
-			<a href="projet.html" data-nav="projet">Projets significatifs</a>
+			<a data-nav="competences" href="competences.html">Compétences</a>
+			<a data-nav="formation" href="formation.html">Formation</a>
+			<a data-nav="projet" href="projet.html">Projets significatifs</a>
 		</nav>
-
 		<div class="actions-barre-laterale">
-			<a class="bouton-barre-laterale" href="Docs/CV_EL_BOUFFI.pdf" target="_blank" rel="noopener noreferrer" download="CV_EL_BOUFFI.pdf">Télécharger le CV</a>
-			<a class="contact-barre-laterale" href="contact.html" data-nav="contact">Contact</a>
+			<a class="bouton-barre-laterale" download="CV_EL_BOUFFI.pdf" href="Docs/CV_EL_BOUFFI.pdf" rel="noopener noreferrer" target="_blank">Télécharger le CV</a>
+			<a class="contact-barre-laterale" data-nav="contact" href="contact.html">Contact</a>
 		</div>
-
-		<div class="reseaux-barre-laterale" aria-label="Présence en ligne">
-			<a class="icone-reseau" href="https://www.linkedin.com/in/driss-el-bouffi-25a394316" target="_blank" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin" aria-label="LinkedIn">
-				<svg viewBox="0 0 24 24" aria-hidden="true">
+		<div aria-label="Présence en ligne" class="reseaux-barre-laterale">
+			<a aria-label="LinkedIn" class="icone-reseau" href="https://www.linkedin.com/in/driss-el-bouffi-25a394316" referrerpolicy="strict-origin-when-cross-origin" rel="noopener noreferrer" target="_blank">
+				<svg aria-hidden="true" viewbox="0 0 24 24">
 					<path d="M6.94 8.5H3.56V20h3.38V8.5Zm-1.69-5A1.96 1.96 0 0 0 3.25 5.5c0 1.07.84 1.94 1.97 1.94h.03c1.15 0 1.97-.87 1.97-1.94A1.95 1.95 0 0 0 5.28 3.5h-.03ZM20.75 13.03c0-3.43-1.83-5.03-4.27-5.03-1.97 0-2.85 1.08-3.34 1.84V8.5H9.76c.04.89 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.9-1.38 1.95-1.38 1.38 0 1.93 1.04 1.93 2.57V20h3.38v-6.97Z"></path>
 				</svg>
 				<span class="masque-visuel">LinkedIn</span>
 			</a>
-			<a class="icone-reseau" href="https://github.com/elbdweb" target="_blank" rel="noopener noreferrer" referrerpolicy="strict-origin-when-cross-origin" aria-label="GitHub">
-				<svg viewBox="0 0 24 24" aria-hidden="true">
+			<a aria-label="GitHub" class="icone-reseau" href="https://github.com/elbdweb" referrerpolicy="strict-origin-when-cross-origin" rel="noopener noreferrer" target="_blank">
+				<svg aria-hidden="true" viewbox="0 0 24 24">
 					<path d="M12 2C6.48 2 2 6.59 2 12.24c0 4.52 2.87 8.35 6.84 9.71.5.09.68-.22.68-.49 0-.24-.01-1.03-.01-1.87-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.58 2.35 1.13 2.92.87.09-.67.35-1.13.63-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.64 1.03 2.76 0 3.95-2.35 4.82-4.58 5.07.36.32.69.95.69 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.59.69.49A10.25 10.25 0 0 0 22 12.24C22 6.59 17.52 2 12 2Z"></path>
 				</svg>
 				<span class="masque-visuel">GitHub</span>
 			</a>
 		</div>
 	</div>
-
-	<div class="media-bas-barre-laterale" aria-hidden="true">
-		<img class="gif-barre-laterale" src="FrontPic/giphy.gif" alt="" width="500" height="281" loading="lazy" decoding="async">
+	<div aria-hidden="true" class="media-bas-barre-laterale">
+		<img alt="" class="gif-barre-laterale" decoding="async" height="281" loading="lazy" src="FrontPic/giphy.gif" width="500"/>
 	</div>
 </aside>
 `;
+
 
 const SAFE_LINK_PROTOCOLS = new Set(['http:', 'https:', 'mailto:', 'tel:']);
 const SAFE_IMAGE_PROTOCOLS = new Set(['http:', 'https:', 'data:']);

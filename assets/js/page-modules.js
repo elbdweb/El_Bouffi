@@ -120,8 +120,6 @@
 
 
 	function initPageAccueil() {
-		if (currentPage !== 'index') return;
-
 		const cartesTableauxAccueil = Array.from(document.querySelectorAll('.carte-anneau-domaine'));
 		animerChargementTableaux(cartesTableauxAccueil);
 	}
@@ -581,7 +579,7 @@
 
 		function filterSkills() {
 			const query = searchInput.value;
-			const filtered = indexedSkills.filter((row) => rowMatches(row, query));
+			const filtered = indexedSkills.filter((row) => getSkillMatchScore(row, query) !== null);
 			const sorted = sortSkillsByRelevance(filtered, query);
 			renderTable(sorted);
 			updateResultsCount(sorted.length);
