@@ -1,297 +1,261 @@
 <!DOCTYPE html>
+
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio de Driss El Bouffi, profil orienté data, finance, analyse et développement.">
-  <title>Driss El Bouffi — Portfolio</title>
-  <link rel="icon" type="image/svg+xml" href="FrontPic/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/theme.css">
-  <style>
-    .section-head-link-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .section-link-button {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 9px 14px;
-      font-size: 0.88rem;
-      min-height: 0;
-      white-space: nowrap;
-    }
-
-    body[data-page="index"] [data-reveal] {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.42s ease, transform 0.42s ease;
-    }
-
-    body[data-page="index"] [data-reveal].is-visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    @media (max-width: 860px) {
-      .section-head-link-wrap {
-        padding-bottom: 54px;
-      }
-
-      .section-link-button {
-        top: auto;
-        bottom: 0;
-        transform: none;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .section-link-button {
-        position: static;
-        transform: none;
-        margin-top: 14px;
-      }
-
-      .section-head-link-wrap {
-        padding-bottom: 0;
-      }
-    }
-  </style>
-</head>
-<body data-page="index">
-  <div class="site-layout">
-    <div class="sidebar-shell" data-sidebar-mount></div>
-
-    <main class="content-shell">
-      <div class="page-wrap">
-        <section class="intro-hero" data-reveal>
-          <div class="page-copy">
-            <span class="eyebrow">EL BOUFFI Driss</span>
-            <h1>Data Analyst, Data Scientist et développeur orienté finance.</h1>
-            <p>
-              Diplômé d'un Master Système d’Information Économique et Financier de l’Université de Montpellier,
-              avec une approche croisant analyse de données, programmation, finance et systèmes d’information.
-            </p>
-            <div class="hero-actions">
-              <a class="button" href="Docs/CV_EL_BOUFFI.pdf" target="_blank" rel="noopener">Consulter le CV</a>
-              <a class="button-secondary" href="contact.html">Me contacter</a>
-            </div>
-          </div>
-
-          <div class="hero-visual">
-            <img src="FrontPic/186374429.jpg" alt="Photo de Driss El Bouffi">
-          </div>
-        </section>
-
-<section class="three-grid" data-reveal>
-  <article class="simple-card domain-donut-card">
-    <div class="kpi">Data</div>
-    <p class="domain-chart-copy">
-      Répartition des compétences Data par formation : licence, master et expérience de stage.
-    </p>
-    <div class="domain-donut domain-donut-data" aria-hidden="true">
-      <div class="domain-donut-hole">
-        <strong>26</strong>
-        <span>compétences</span>
-      </div>
-    </div>
-    <div class="domain-donut-legend" aria-label="Répartition des compétences Data par formation">
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-licence"></span>
-        <strong>Licence</strong>
-        <span>8 · 30,8 %</span>
-      </div>
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-master"></span>
-        <strong>Master</strong>
-        <span>13 · 50,0 %</span>
-      </div>
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-stage"></span>
-        <strong>Stage</strong>
-        <span>5 · 19,2 %</span>
-      </div>
-    </div>
-  </article>
-
-  <article class="simple-card domain-donut-card">
-    <div class="kpi">Informatique</div>
-    <p class="domain-chart-copy">
-      Répartition des compétences Informatiques par formation : licence, master et expérience de stage.
-    </p>
-    <div class="domain-donut domain-donut-informatique" aria-hidden="true">
-      <div class="domain-donut-hole">
-        <strong>18</strong>
-        <span>compétences</span>
-      </div>
-    </div>
-    <div class="domain-donut-legend" aria-label="Répartition des compétences Informatiques par formation">
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-licence"></span>
-        <strong>Licence</strong>
-        <span>2 · 11,1 %</span>
-      </div>
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-master"></span>
-        <strong>Master</strong>
-        <span>10 · 55,6 %</span>
-      </div>
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-stage"></span>
-        <strong>Stage</strong>
-        <span>6 · 33,3 %</span>
-      </div>
-    </div>
-  </article>
-
-  <article class="simple-card domain-donut-card">
-    <div class="kpi">Finance</div>
-    <p class="domain-chart-copy">
-      Répartition des compétences Finance par formation : licence, master et expérience de stage.
-    </p>
-    <div class="domain-donut domain-donut-finance" aria-hidden="true">
-      <div class="domain-donut-hole">
-        <strong>18</strong>
-        <span>compétences</span>
-      </div>
-    </div>
-    <div class="domain-donut-legend" aria-label="Répartition des compétences Finance par formation">
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-licence"></span>
-        <strong>Licence</strong>
-        <span>9 · 50,0 %</span>
-      </div>
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-master"></span>
-        <strong>Master</strong>
-        <span>6 · 33,3 %</span>
-      </div>
-      <div class="domain-donut-legend-item">
-        <span class="domain-dot domain-dot-stage"></span>
-        <strong>Stage</strong>
-        <span>3 · 16,7 %</span>
-      </div>
-    </div>
-  </article>
-</section>
-
-        <section class="panel" data-reveal>
-          <div class="section-head">
-            <div>
-              <h2 class="section-title">Expériences professionnelles</h2>
-              <p class="section-copy">Deux expériences centrées sur la donnée, la structuration de l’information et l’utilité métier du livrable.</p>
-            </div>
-          </div>
-
-          <div class="timeline-grid experience-stack">
-            <article class="timeline-card">
-              <p class="card-kicker">Septeo — Lattes</p>
-              <h3 class="card-title">Stage de fin d’études · Mars 2025 — Août 2025</h3>
-              <p>
-                Conception et développement d’un système automatisé de suivi et d’analyse en temps réel des coûts d’infrastructure cloud par application et par filiale.
-              </p>
-              <ul class="clean-list">
-                <li>Modélisation et architecture de base de données.</li>
-                <li>Automatisation de la collecte et du calcul des coûts.</li>
-                <li>Dashboard exploitable dans un environnement Kubernetes / Linux.</li>
-              </ul>
-            </article>
-
-            <article class="timeline-card">
-              <p class="card-kicker">Queoval — Mauguio</p>
-              <h3 class="card-title">Stage · Juillet 2024</h3>
-              <p>
-                Analyse des besoins clients issus de secteurs réglementés et structuration de données adaptée à leurs contraintes métier.
-              </p>
-              <ul class="clean-list">
-                <li>Extraction et nettoyage sous Microsoft SQL Server.</li>
-                <li>Structuration de données et génération de fichiers XML.</li>
-                <li>Interopérabilité, traçabilité et visibilité adaptées à l’activité client.</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-
-       <section class="panel" data-reveal>
-  <div class="section-head">
-    <div class="section-head-link-wrap">
-      <h2 class="section-title">Compétences</h2>
-      <p class="section-copy">Synthèse des compétences techniques, quantitatives et analytiques mobilisées dans le portfolio.</p>
-      <a class="button section-link-button" href="competences.html">Voir la page</a>
-    </div>
-  </div>
-  <ul class="clean-list">
-    <li>Python, VBA, JavaScript, algorithmique et programmation appliquée.</li>
-    <li>Manipulation, structuration et analyse de données économiques et financières.</li>
-    <li>Statistiques, économétrie, méthodes de prévision et calcul stochastique.</li>
-    <li>Bases de données, entrepôts de données, SQLite, modélisation et gestion de l’information.</li>
-    <li>Big data, datamining, datavisualisation et outils d’aide à la décision.</li>
-    <li>Systèmes d’information, sécurité des données, réseaux, VPN, proxy, Docker et Kubernetes.</li>
-  </ul>
-</section>
-      
-        <section class="panel" data-reveal>
-          <div class="section-head">
-            <div class="section-head-link-wrap">
-              <h2 class="section-title">Formation</h2>
-              <p class="section-copy">Master SIEF et Licence d’économie à l’Université de Montpellier.</p>
-              <a class="button section-link-button" href="formation.html">Voir la page</a>
-            </div>
-          </div>
-          <div class="info-grid">
-            <article class="info-card">
-              <p class="card-kicker">Master</p>
-              <h3 class="card-title">Système d’Information Économique et Financier</h3>
-              <p>Analyse de données, économétrie, machine learning, SQL, Python, SAS, VBA et conception de systèmes d’information.</p>
-              <div class="card-actions">
-                <a class="link-pill" href="formation.html">En savoir plus</a>
-              </div>
-            </article>
-            <article class="info-card">
-              <p class="card-kicker">Licence</p>
-              <h3 class="card-title">Économie</h3>
-              <p>Socle solide en économie, management, comptabilité, statistiques, probabilités et droit des affaires.</p>
-              <div class="card-actions">
-                <a class="link-pill" href="formation.html">En savoir plus</a>
-              </div>
-            </article>
-          </div>
-        </section>
-
-       <section class="panel" data-reveal>
-  <div class="section-head">
-    <div class="section-head-link-wrap">
-      <h2 class="section-title">Projets significatifs</h2>
-      <a class="button section-link-button" href="projet.html">Voir la page</a>
-    </div>
-  </div>
-  <ul class="clean-list">
-    <li>Mémoire de fin d’études - L’automatisation financière sous Kubernetes (<a href="Docs/memoire_mbfa_sief.pdf" style="color: blue; text-decoration: underline;">pdf</a>)</li>
-    <li>Projet d’économétrie appliquée - Cycle de vie de la Nintendo Switch et prévisions pour l’année fiscale 2024 (<a href="Docs/prevision_nintendo_switch_2024.pdf" style="color: blue; text-decoration: underline;">pdf</a>)</li>
-    <li>Document - Valorisation de l'entreprise Nestlé (<a href="Docs/dossier_nestle.pdf" style="color: blue; text-decoration: underline;">pdf</a>/<a href="Docs/dossier_nestle.xlsx" style="color: blue; text-decoration: underline;">xlsx</a>)</li>
-    <li>Analyse technique - L’impact des décisions de Marvel Studios sur le cours boursier de The Walt Disney Company (<a href="Docs/analyse_technique_marvel_disney.pdf" style="color: blue; text-decoration: underline;">pdf</a>)</li>
-    <li>Service en ligne - Téléchargement gratuit de jaquettes personnalisées (<a href="https://tsushi12.github.io/Jaquettes/" style="color: blue; text-decoration: underline;">site</a>)</li>
-  </ul>
-</section>
-
-        <div class="footer-links" data-reveal>
-          <a href="contact.html">Contact</a>
-          <a href="https://www.linkedin.com/in/driss-el-bouffi-25a394316" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-
-        <div class="home-version">v2.4.1</div>
-      </div>
-    </main>
-  </div>
-
-  <script src="assets/js/layout.js"></script>
-</body>
+	<head>
+		<meta charset="utf-8"/>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
+		<meta content="Portfolio de Driss El Bouffi, profil orienté data, finance, analyse et développement." name="description"/>
+		<title>Driss El Bouffi — Portfolio</title>
+		<link href="FrontPic/favicon.svg" rel="icon" type="image/svg+xml"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+		<link href="assets/css/theme.css" rel="stylesheet"/>
+	</head>
+	<body data-page="index">
+		<div class="mise-en-page-site">
+			<div class="enveloppe-barre-laterale" data-sidebar-mount=""></div>
+			<main class="enveloppe-contenu">
+				<div class="conteneur-page">
+					<section class="intro-vitrine" data-reveal="">
+						<div class="texte-page">
+							<span class="accroche">EL BOUFFI Driss</span>
+							<h1>Data Analyst, Data Scientist et développeur orienté finance.</h1>
+							<p>
+								Diplômé d'un Master Système d’Information Économique et Financier de l’Université de Montpellier,
+								avec une approche croisant analyse de données, programmation, finance et systèmes d’information.
+							</p>
+							<div class="actions-vitrine">
+								<a class="bouton" href="Docs/CV_EL_BOUFFI.pdf" rel="noopener noreferrer" target="_blank">Consulter le CV</a>
+								<a class="bouton-secondaire" href="contact.html">Me contacter</a>
+							</div>
+						</div>
+						<div class="visuel-vitrine">
+							<img alt="Photo de Driss El Bouffi" decoding="async" src="FrontPic/186374429.jpg"/>
+						</div>
+					</section>
+					<section class="grille-trois" data-reveal="">
+						<article class="carte-simple carte-anneau-domaine">
+							<div class="indicateur">Data</div>
+							<p class="texte-graphe-domaine">
+								Répartition des compétences Data par formation : licence, master et expérience de stage.
+							</p>
+							<div aria-hidden="true" class="anneau-domaine anneau-domaine-donnees">
+								<div class="centre-anneau-domaine">
+									<strong>26</strong>
+									<span>compétences</span>
+								</div>
+							</div>
+							<div aria-label="Répartition des compétences Data par formation" class="legende-anneau-domaine">
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-licence"></span>
+									<strong>Licence</strong>
+									<span>8 · 30,8 %</span>
+								</div>
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-master"></span>
+									<strong>Master</strong>
+									<span>13 · 50,0 %</span>
+								</div>
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-stage"></span>
+									<strong>Stage</strong>
+									<span>5 · 19,2 %</span>
+								</div>
+							</div>
+						</article>
+						<article class="carte-simple carte-anneau-domaine">
+							<div class="indicateur">Informatique</div>
+							<p class="texte-graphe-domaine">
+								Répartition des compétences Informatiques et cloud par formation : licence, master et expérience de stage.
+							</p>
+							<div aria-hidden="true" class="anneau-domaine anneau-domaine-informatique">
+								<div class="centre-anneau-domaine">
+									<strong>26</strong>
+									<span>compétences</span>
+								</div>
+							</div>
+							<div aria-label="Répartition des compétences Informatiques et cloud par formation" class="legende-anneau-domaine">
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-licence"></span>
+									<strong>Licence</strong>
+									<span>2 · 7,7 %</span>
+								</div>
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-master"></span>
+									<strong>Master</strong>
+									<span>10 · 38,5 %</span>
+								</div>
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-stage"></span>
+									<strong>Stage</strong>
+									<span>14 · 53,8 %</span>
+								</div>
+							</div>
+						</article>
+						<article class="carte-simple carte-anneau-domaine">
+							<div class="indicateur">Finance</div>
+							<p class="texte-graphe-domaine">
+								Répartition des compétences Finance par formation : licence, master et expérience de stage.
+							</p>
+							<div aria-hidden="true" class="anneau-domaine anneau-domaine-finance">
+								<div class="centre-anneau-domaine">
+									<strong>18</strong>
+									<span>compétences</span>
+								</div>
+							</div>
+							<div aria-label="Répartition des compétences Finance par formation" class="legende-anneau-domaine">
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-licence"></span>
+									<strong>Licence</strong>
+									<span>9 · 50,0 %</span>
+								</div>
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-master"></span>
+									<strong>Master</strong>
+									<span>6 · 33,3 %</span>
+								</div>
+								<div class="element-legende-anneau-domaine">
+									<span class="pastille-domaine pastille-domaine-stage"></span>
+									<strong>Stage</strong>
+									<span>3 · 16,7 %</span>
+								</div>
+							</div>
+						</article>
+					</section>
+					<section class="panneau" data-reveal="">
+						<div class="entete-section">
+							<div>
+								<h2 class="titre-section">Expériences professionnelles</h2>
+								<p class="texte-section">Trois expériences centrées sur l’analyse, le support et l’utilité métier du livrable.</p>
+							</div>
+						</div>
+						<div class="grille-chronologie pile-experience">
+							<article class="carte-chronologie">
+								<div class="entete-carte-experience">
+									<div class="texte-entete-carte-experience">
+										<p class="carte-surtitre">Computacenter — Pérols</p>
+										<h3 class="carte-titre">Support IT · Octobre 2025 — Aujourd'hui</h3>
+									</div>
+									<div class="conteneur-logo-carte-experience">
+										<img alt="Logo Computacenter" class="logo-carte-experience" decoding="async" height="270" loading="lazy" src="FrontPic/computacenter.png" width="480"/>
+									</div>
+								</div>
+								<p>
+									Support aux utilisateurs et contribution au maintien en conditions opérationnelles du poste de travail et des accès techniques dans un cadre structuré.
+								</p>
+								<ul class="liste-propre">
+									<li>Prise en charge des sollicitations utilisateurs et suivi des demandes dans une logique de qualité de service.</li>
+									<li>Diagnostic d’incidents, lecture de logs et premières analyses techniques pour orienter ou résoudre les anomalies.</li>
+									<li>Vérification de connectivité, de flux réseau, de ports et de services selon les procédures applicables en environnements publics et privés.</li>
+								</ul>
+							</article>
+							<article class="carte-chronologie">
+								<div class="entete-carte-experience">
+									<div class="texte-entete-carte-experience">
+										<p class="carte-surtitre">Septeo — Lattes</p>
+										<h3 class="carte-titre">Stage de fin d’études · Mars 2025 — Août 2025</h3>
+									</div>
+									<div class="conteneur-logo-carte-experience">
+										<img alt="Logo Septeo" class="logo-carte-experience" decoding="async" height="270" loading="lazy" src="FrontPic/septeo.png" width="480"/>
+									</div>
+								</div>
+								<p>
+									Conception et développement d’un système automatisé de suivi et d’analyse en temps réel des coûts d’infrastructure cloud par application et par filiale.
+								</p>
+								<ul class="liste-propre">
+									<li>Modélisation et architecture de base de données.</li>
+									<li>Automatisation de la collecte et du calcul des coûts.</li>
+									<li>Dashboard exploitable dans un environnement Kubernetes / Linux.</li>
+								</ul>
+							</article>
+							<article class="carte-chronologie">
+								<div class="entete-carte-experience">
+									<div class="texte-entete-carte-experience">
+										<p class="carte-surtitre">Queoval — Mauguio</p>
+										<h3 class="carte-titre">Stage · Juillet 2024</h3>
+									</div>
+									<div class="conteneur-logo-carte-experience">
+										<img alt="Logo Queoval" class="logo-carte-experience" decoding="async" height="270" loading="lazy" src="FrontPic/queoval.png" width="480"/>
+									</div>
+								</div>
+								<p>
+									Analyse des besoins clients issus de secteurs réglementés et structuration de données adaptée à leurs contraintes métier.
+								</p>
+								<ul class="liste-propre">
+									<li>Extraction et nettoyage sous Microsoft SQL Server.</li>
+									<li>Structuration de données et génération de fichiers XML.</li>
+									<li>Interopérabilité, traçabilité et visibilité adaptées à l’activité client.</li>
+								</ul>
+							</article>
+						</div>
+					</section>
+					<section class="panneau" data-reveal="">
+						<div class="entete-section">
+							<div class="conteneur-lien-entete-section">
+								<h2 class="titre-section">Compétences</h2>
+								<a class="bouton bouton-lien-section" href="competences.html">Voir la page</a>
+							</div>
+						</div>
+						<ul class="liste-propre">
+							<li>Python, VBA, JavaScript, algorithmique et programmation appliquée.</li>
+							<li>Manipulation, structuration et analyse de données économiques et financières.</li>
+							<li>Statistiques, économétrie, méthodes de prévision et calcul stochastique.</li>
+							<li>Bases de données, entrepôts de données, SQLite, modélisation et gestion de l’information.</li>
+							<li>Big data, datamining, datavisualisation et outils d’aide à la décision.</li>
+							<li>Systèmes d’information, sécurité des données, réseaux, VPN, proxy, Docker et Kubernetes.</li>
+						</ul>
+					</section>
+					<section class="panneau" data-reveal="">
+						<div class="entete-section">
+							<div class="conteneur-lien-entete-section">
+								<h2 class="titre-section">Formation</h2>
+								<p class="texte-section">Faculté d'économie - Université de Montpellier</p>
+								<a class="bouton bouton-lien-section" href="formation.html">Voir la page</a>
+							</div>
+						</div>
+						<div class="grille-info">
+							<article class="carte-info">
+								<p class="carte-surtitre">Master</p>
+								<h3 class="carte-titre">Système d’Information Économique et Financier</h3>
+								<p>Analyse de données, économétrie, machine learning, SQL, Python, SAS, VBA et conception de systèmes d’information.</p>
+								<div class="carte-actions">
+									<a class="lien-pastille" href="formation.html">En savoir plus</a>
+								</div>
+							</article>
+							<article class="carte-info">
+								<p class="carte-surtitre">Licence</p>
+								<h3 class="carte-titre">Économie</h3>
+								<p>Socle solide en économie, management, comptabilité, statistiques, probabilités et droit des affaires.</p>
+								<div class="carte-actions">
+									<a class="lien-pastille" href="formation.html">En savoir plus</a>
+								</div>
+							</article>
+						</div>
+					</section>
+					<section class="panneau" data-reveal="">
+						<div class="entete-section">
+							<div class="conteneur-lien-entete-section">
+								<h2 class="titre-section">Projets significatifs</h2>
+								<a class="bouton bouton-lien-section" href="projet.html">Voir la page</a>
+							</div>
+						</div>
+						<ul class="liste-propre">
+							<li>Mémoire de fin d’études - L’automatisation financière sous Kubernetes (<a class="lien-doc-en-ligne" href="Docs/memoire_mbfa_sief.pdf" rel="noopener noreferrer" target="_blank">pdf</a>)</li>
+							<li>Projet d’économétrie appliquée - Cycle de vie de la Nintendo Switch et prévisions pour l’année fiscale 2024 (<a class="lien-doc-en-ligne" href="Docs/prevision_nintendo_switch_2024.pdf" rel="noopener noreferrer" target="_blank">pdf</a>)</li>
+							<li>Document - Valorisation de l'entreprise Nestlé (<a class="lien-doc-en-ligne" href="Docs/dossier_nestle.pdf" rel="noopener noreferrer" target="_blank">pdf</a>/<a class="lien-doc-en-ligne" href="Docs/dossier_nestle.xlsx" rel="noopener noreferrer" target="_blank">xlsx</a>)</li>
+							<li>Analyse technique - L’impact des décisions de Marvel Studios sur le cours boursier de The Walt Disney Company (<a class="lien-doc-en-ligne" href="Docs/analyse_technique_marvel_disney.pdf" rel="noopener noreferrer" target="_blank">pdf</a>)</li>
+							<li>Service en ligne - Téléchargement gratuit de jaquettes personnalisées (<a class="lien-doc-en-ligne" href="https://tsushi12.github.io/Jaquettes/" referrerpolicy="strict-origin-when-cross-origin" rel="noopener noreferrer" target="_blank">site</a>)</li>
+						</ul>
+					</section>
+					<div class="liens-pied-page" data-reveal="">
+						<a href="contact.html">Contact</a>
+						<a href="https://www.linkedin.com/in/driss-el-bouffi-25a394316" referrerpolicy="strict-origin-when-cross-origin" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+					</div>
+					<div class="version-accueil">v2.4.2</div>
+				</div>
+			</main>
+		</div>
+		<script src="assets/js/layout.js"></script>
+	</body>
 </html>

@@ -1,701 +1,145 @@
 <!DOCTYPE html>
+
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Compétences techniques, analytiques et métiers de Driss El Bouffi.">
-  <title>Driss El Bouffi — Compétences</title>
-  <link rel="icon" type="image/svg+xml" href="FrontPic/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/theme.css">
-</head>
-<body data-page="competences">
-  <div class="site-layout">
-    <div class="sidebar-shell" data-sidebar-mount></div>
-
-    <main class="content-shell">
-      <div class="page-wrap">
-        <section class="panel skills-hero" data-reveal>
-          <div class="skills-hero-copy">
-            <span class="eyebrow">Compétences</span>
-            <h1>Compétences techniques, data, cloud et finance</h1>
-            <p class="skills-hero-text">
-              Sur cette page, je mets en avant les compétences que j’ai acquises et consolidées au fil de mon parcours.
-              Elles résultent de ma formation en licence, de mon master SIEF, et surtout de mon stage de fin d’études réalisé chez Septeo,
-              qui m’a permis de les mettre en pratique dans un environnement professionnel concret.
-            </p>
-          </div>
-
-          <div class="skills-hero-meta" aria-label="Synthèse des compétences">
-            <article class="skills-mini-card">
-              <span class="skills-mini-label">Compétences référencées</span>
-              <strong id="skills-total">73</strong>
-            </article>
-            <article class="skills-mini-card">
-              <span class="skills-mini-label">Domaines</span>
-              <strong id="skills-domains">5</strong>
-            </article>
-            <article class="skills-mini-card">
-              <span class="skills-mini-label">Expériences</span>
-              <strong id="skills-experiences">3</strong>
-            </article>
-          </div>
-        </section>
-
-        <section class="skills-dashboard" aria-label="Dashboard des compétences" data-reveal>
-          <article class="panel skills-chart-card">
-            <div class="skills-card-head">
-              <div>
-                <p class="card-kicker">Histogramme horizontal</p>
-                <h2 class="card-title">Répartition des compétences par domaine</h2>
-              </div>
-            </div>
-            <div id="domain-chart" class="skills-bars" aria-label="Répartition des compétences par domaine"></div>
-          </article>
-
-          <article class="panel skills-chart-card">
-            <div class="skills-card-head">
-              <div>
-                <p class="card-kicker">Camembert</p>
-                <h2 class="card-title">Répartition du socle technique</h2>
-                <p class="skills-card-copy">Part relative des compétences Data, Cloud et Informatique.</p>
-              </div>
-            </div>
-
-            <div class="skills-donut-layout">
-              <div id="technical-chart" class="skills-donut" aria-hidden="true"></div>
-              <div id="technical-legend" class="skills-legend" aria-label="Légende du socle technique"></div>
-            </div>
-          </article>
-
-          <article class="panel skills-chart-card">
-            <div class="skills-card-head">
-              <div>
-                <p class="card-kicker">Barres empilées</p>
-                <h2 class="card-title">Compétences acquises par expérience</h2>
-              </div>
-            </div>
-
-            <div id="experience-chart" class="skills-stacked" aria-label="Compétences acquises par expérience"></div>
-            <div id="experience-legend" class="skills-legend skills-legend-inline" aria-label="Légende des catégories"></div>
-          </article>
-        </section>
-
-        <section class="panel skills-panel">
-          <div class="skills-panel-head">
-            <div>
-              <h2 class="section-title">Explorer les compétences</h2>
-              <p class="section-copy skills-section-copy">
-                Vous recherchez une compétence particulière ?
-              </p>
-            </div>
-          </div>
-
-          <div class="skills-search-wrap">
-            <label class="sr-only" for="skills-search">Rechercher une compétence</label>
-            <div class="skills-search-box">
-              <span class="skills-search-icon" aria-hidden="true">⌕</span>
-              <input
-                id="skills-search"
-                type="search"
-                placeholder="Ex. dev, cloud, banque, gestion, data, sql, python, k8s..."
-                autocomplete="off"
-              >
-              <button id="skills-reset" class="skills-reset" type="button">Effacer</button>
-            </div>
-            <p id="skills-results" class="skills-results">73 compétences affichées</p>
-          </div>
-
-          <div class="skills-table-wrap">
-            <table class="skills-table">
-              <thead>
-                <tr>
-                  <th scope="col">Compétence</th>
-                  <th scope="col" class="skills-action-head">Détail</th>
-                </tr>
-              </thead>
-              <tbody id="skills-table-body"></tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-    </main>
-  </div>
-
-  <dialog class="skills-modal" id="skill-modal" aria-labelledby="skill-modal-title">
-    <form method="dialog" class="skills-modal-shell">
-      <div class="skills-modal-head">
-        <div>
-          <p class="card-kicker">Détail</p>
-          <h2 id="skill-modal-title" class="card-title">Compétence</h2>
-        </div>
-        <button class="skills-modal-close" type="submit" aria-label="Fermer">✕</button>
-      </div>
-
-      <div class="skills-modal-grid">
-        <article class="skills-modal-item">
-          <span>Catégorie</span>
-          <strong id="modal-category"></strong>
-        </article>
-        <article class="skills-modal-item">
-          <span>Expérience</span>
-          <strong id="modal-metier"></strong>
-        </article>
-        <article class="skills-modal-item">
-          <span>Service</span>
-          <strong id="modal-service"></strong>
-        </article>
-        <article class="skills-modal-item">
-          <span>Établissement</span>
-          <strong id="modal-etablissement"></strong>
-        </article>
-      </div>
-    </form>
-  </dialog>
-
-  <script src="assets/js/layout.js"></script>
-  <script>
-    const skillsData = [
-      {"competence":"Microeconomie","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Macroeconomie","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Economie internationale","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Droit des affaires","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Management des organisations","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Cybersecurite","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"RGPD","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Droit informatique","categorie":"Autres","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Aide a la decision","categorie":"Autres","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Tableaux de bord","categorie":"Autres","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Kubernetes","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"kubectl","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Helm","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Orchestration de conteneurs","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Deploiement applicatif","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Configuration applicative","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Persistance des donnees","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Observabilite","categorie":"Cloud","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Traitement de donnees","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Gestion de donnees","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Analyse de donnees","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Statistiques","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Probabilites","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Echantillonnage","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Econometrie","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Optimisation","categorie":"Data","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Entrepot de donnees","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Traitement de donnees","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Analyse de donnees","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Big data","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Data mining","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Data visualisation","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Power BI","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Intelligence artificielle","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"LLM","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Statistiques","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Econometrie","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Series temporelles","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Prevision","categorie":"Data","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"SQL","categorie":"Data","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"MySQL","categorie":"Data","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Modelisation de donnees","categorie":"Data","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Historisation des donnees","categorie":"Data","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Tracabilite des calculs","categorie":"Data","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Analyse financiere","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Comptabilite generale","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Comptabilite analytique","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Finance internationale","categorie":"Finance","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Economie financiere","categorie":"Finance","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Finance de marche","categorie":"Finance","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Finance d'entreprise","categorie":"Finance","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Analyse financiere","categorie":"Finance","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Modeles financiers","categorie":"Finance","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Prevision financiere","categorie":"Finance","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Allocation de couts","categorie":"Finance","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Amortissement","categorie":"Finance","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Automatisation des calculs financiers","categorie":"Finance","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Fondamentaux de l'Informatique","categorie":"Informatique","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Base de donnees","categorie":"Informatique","metier":"Licence d'economie","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Algorithmique","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Programmation","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Python","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"VBA","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"JavaScript","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"SAS","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Systemes d'information","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Base de donnees","categorie":"Informatique","metier":"Master - Systeme d'Information Economique et Financier","service":"Faculte d'economie","etablissement":"Universite de Montpellier"},
-      {"competence":"Linux","categorie":"Informatique","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Reseau informatique","categorie":"Informatique","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Git","categorie":"Informatique","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"PHP","categorie":"Informatique","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Twig","categorie":"Informatique","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"},
-      {"competence":"Chart.js","categorie":"Informatique","metier":"FinOps (Stage)","service":"Infrastructure et Cloud","etablissement":"Septeo"}
-    ];
-
-    const categoryColors = {
-      Data: '#1d7fe0',
-      Finance: '#8f1d3f',
-      Informatique: '#1f6b45',
-      Cloud: '#f2a007',
-      Autres: '#8b98aa'
-    };
-
-    const experienceShortLabels = {
-      "Licence d'economie": "Licence",
-      "Master - Systeme d'Information Economique et Financier": "Master",
-      "FinOps (Stage)": "Septeo"
-    };
-
-    const categoryAliases = {
-      Finance: [
-        'finance', 'financier', 'financiere', 'financiers', 'bancaire', 'banque', 'argent',
-        'gestion', 'business', 'budget', 'cout', 'couts', 'comptabilite', 'compta',
-        'analyse financiere', 'performance', 'pilotage', 'decision', 'reporting', 'mbfa'
-      ],
-      Data: [
-        'data', 'donnee', 'donnees', 'dataset', 'analytics', 'analytique', 'analyse',
-        'statistiques', 'stats', 'econometrie', 'machine learning', 'ml', 'ia', 'ai',
-        'bi', 'dashboard', 'visualisation', 'dataviz', 'base de donnees', 'bdd',
-        'database', 'sql', 'mysql', 'entrepot', 'historisation', 'tracabilite', 'prevision'
-      ],
-      Informatique: [
-        'informatique', 'tech', 'technique', 'developpement', 'developpeur', 'dev',
-        'programmation', 'code', 'logiciel', 'application', 'web', 'backend',
-        'frontend', 'script', 'software', 'algorithmique', 'systeme', 'reseau',
-        'securite', 'bases', 'bdd', 'database'
-      ],
-      Cloud: [
-        'cloud', 'devops', 'infra', 'infrastructure', 'ops', 'plateforme', 'platform',
-        'kubernetes', 'k8s', 'kubectl', 'helm', 'orchestration', 'conteneur',
-        'conteneurs', 'container', 'containers', 'deploiement', 'deployment',
-        'observabilite', 'run', 'sre'
-      ],
-      Autres: [
-        'gestion', 'pilotage', 'decision', 'gouvernance', 'juridique', 'conformite',
-        'management', 'organisation', 'tableau de bord', 'dashboard'
-      ]
-    };
-
-    const experienceAliases = {
-      "Licence d'economie": [
-        'licence', 'universite', 'faculte', 'academique', 'fondamentaux', 'socle',
-        'economie', 'eco', 'formation initiale'
-      ],
-      "Master - Systeme d'Information Economique et Financier": [
-        'master', 'sief', 'mbfa', 'specialisation', 'avance', 'expertise',
-        'universite', 'faculte', 'formation specialisee'
-      ],
-      "FinOps (Stage)": [
-        'septeo', 'stage', 'entreprise', 'professionnel', 'pro', 'finops',
-        'experience', 'metier', 'infrastructure', 'cloud'
-      ]
-    };
-
-    const serviceAliases = {
-      "Faculte d'economie": ['universite', 'academique', 'enseignement', 'faculte', 'campus'],
-      "Infrastructure et Cloud": ['infra', 'cloud', 'ops', 'devops', 'production', 'run']
-    };
-
-    const establishmentAliases = {
-      "Universite de Montpellier": ['universite', 'montpellier', 'enseignement superieur', 'academique'],
-      "Septeo": ['septeo', 'entreprise', 'professionnel', 'societe', 'business']
-    };
-
-    const competenceAliases = {
-      "Microeconomie": ['economie', 'eco', 'micro', 'analyse economique'],
-      "Macroeconomie": ['economie', 'macro', 'analyse economique', 'politique economique'],
-      "Economie internationale": ['economie', 'international', 'commerce', 'mondialisation'],
-      "Droit des affaires": ['droit', 'juridique', 'business law', 'reglementation'],
-      "Management des organisations": ['management', 'gestion', 'organisation', 'pilotage'],
-      "Cybersecurite": ['securite', 'security', 'cyber', 'protection', 'risque'],
-      "RGPD": ['conformite', 'privacy', 'donnees personnelles', 'reglementation', 'gdpr'],
-      "Droit informatique": ['juridique', 'conformite', 'reglementation', 'rgpd'],
-      "Aide a la decision": ['decision', 'pilotage', 'analyse', 'management', 'reporting'],
-      "Tableaux de bord": ['dashboard', 'reporting', 'pilotage', 'bi', 'visualisation'],
-      "Kubernetes": ['k8s', 'devops', 'orchestration', 'containers', 'conteneurs', 'cloud'],
-      "kubectl": ['k8s', 'cli', 'commande', 'terminal', 'cloud'],
-      "Helm": ['k8s', 'charts', 'package manager', 'deploy', 'cloud'],
-      "Orchestration de conteneurs": ['containers', 'conteneurs', 'k8s', 'devops', 'cloud'],
-      "Deploiement applicatif": ['deploy', 'deployment', 'release', 'devops', 'mise en production'],
-      "Configuration applicative": ['config', 'application', 'settings', 'parametrage'],
-      "Persistance des donnees": ['stockage', 'data', 'storage', 'persistency', 'database'],
-      "Observabilite": ['monitoring', 'logs', 'metriques', 'traces', 'supervision'],
-      "Traitement de donnees": ['data processing', 'donnees', 'analyse', 'etl'],
-      "Gestion de donnees": ['data management', 'donnees', 'governance', 'quality'],
-      "Analyse de donnees": ['analytics', 'data analysis', 'analyse', 'insights'],
-      "Statistiques": ['stats', 'quantitatif', 'analyse statistique'],
-      "Probabilites": ['stats', 'mathematiques', 'modele probabiliste'],
-      "Echantillonnage": ['sampling', 'stats', 'sondage'],
-      "Econometrie": ['regression', 'modelisation', 'modele', 'quantitatif'],
-      "Optimisation": ['optimisation mathematique', 'recherche operationnelle'],
-      "Entrepot de donnees": ['data warehouse', 'warehouse', 'bdd', 'database'],
-      "Big data": ['data engineering', 'donnees massives', 'volume', 'scale'],
-      "Data mining": ['fouille de donnees', 'machine learning', 'ml', 'analyse predictive'],
-      "Data visualisation": ['dataviz', 'dashboard', 'graphique', 'bi', 'visualisation'],
-      "Power BI": ['bi', 'dashboard', 'reporting', 'visualisation'],
-      "Intelligence artificielle": ['ia', 'ai', 'machine learning', 'ml'],
-      "LLM": ['ia', 'ai', 'genai', 'intelligence artificielle', 'language model'],
-      "Series temporelles": ['time series', 'forecast', 'prevision'],
-      "Prevision": ['forecast', 'projection', 'anticipation'],
-      "SQL": ['bdd', 'database', 'requete', 'query', 'base de donnees'],
-      "MySQL": ['sql', 'bdd', 'database', 'base de donnees'],
-      "Modelisation de donnees": ['data model', 'schema', 'base de donnees'],
-      "Historisation des donnees": ['historique', 'versioning', 'data lineage', 'tracabilite'],
-      "Tracabilite des calculs": ['audit', 'lineage', 'controle', 'fiabilite'],
-      "Analyse financiere": ['finance', 'performance', 'ratios', 'bilan'],
-      "Comptabilite generale": ['compta', 'comptabilite', 'gestion', 'finance'],
-      "Comptabilite analytique": ['compta', 'couts', 'gestion', 'finance'],
-      "Finance internationale": ['banque', 'bancaire', 'international', 'marche'],
-      "Economie financiere": ['finance', 'bancaire', 'marche'],
-      "Finance de marche": ['trading', 'marche', 'banque', 'finance'],
-      "Finance d'entreprise": ['corporate finance', 'entreprise', 'finance'],
-      "Modeles financiers": ['finance quantitative', 'modelisation', 'prediction'],
-      "Prevision financiere": ['forecast', 'finance', 'projection', 'budget'],
-      "Allocation de couts": ['gestion', 'cost allocation', 'finops', 'couts'],
-      "Amortissement": ['compta', 'finance', 'gestion', 'cout'],
-      "Automatisation des calculs financiers": ['automation', 'finance', 'automatisation', 'finops'],
-      "Fondamentaux de l'Informatique": ['informatique', 'tech', 'bases', 'fondamentaux'],
-      "Base de donnees": ['bdd', 'database', 'sql', 'schema'],
-      "Algorithmique": ['algo', 'programmation', 'logique', 'code'],
-      "Programmation": ['code', 'developpement', 'dev', 'software'],
-      "Python": ['dev', 'developpement', 'programmation', 'script', 'automation', 'automatisation'],
-      "VBA": ['excel', 'macro', 'automatisation', 'office'],
-      "JavaScript": ['js', 'web', 'frontend', 'developpement'],
-      "SAS": ['statistiques', 'analyse', 'data', 'bi'],
-      "Systemes d'information": ['si', 'information systems', 'architecture', 'organisation'],
-      "Linux": ['systeme', 'terminal', 'shell', 'infra', 'ops'],
-      "Reseau informatique": ['network', 'reseau', 'tcp ip', 'dns', 'infra'],
-      "Git": ['github', 'versioning', 'versionnement', 'repository', 'repo'],
-      "PHP": ['web', 'backend', 'developpement', 'serveur'],
-      "Twig": ['template', 'php', 'frontend', 'web'],
-      "Chart.js": ['graphique', 'charts', 'dashboard', 'visualisation', 'js']
-    };
-
-    function normalize(value) {
-      return value
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .replace(/[’']/g, ' ')
-        .replace(/[^a-z0-9]+/g, ' ')
-        .trim();
-    }
-
-    function tokenize(value) {
-      return normalize(value).split(/\s+/).filter(Boolean);
-    }
-
-    function levenshtein(a, b) {
-      if (a === b) return 0;
-      if (!a.length) return b.length;
-      if (!b.length) return a.length;
-
-      const matrix = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
-
-      for (let i = 0; i <= a.length; i += 1) matrix[i][0] = i;
-      for (let j = 0; j <= b.length; j += 1) matrix[0][j] = j;
-
-      for (let i = 1; i <= a.length; i += 1) {
-        for (let j = 1; j <= b.length; j += 1) {
-          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-          matrix[i][j] = Math.min(
-            matrix[i - 1][j] + 1,
-            matrix[i][j - 1] + 1,
-            matrix[i - 1][j - 1] + cost
-          );
-        }
-      }
-
-      return matrix[a.length][b.length];
-    }
-
-    function fuzzyTokenMatch(token, candidates) {
-      return candidates.some((candidate) => {
-        if (!candidate || candidate.length < 3) return false;
-        if (candidate === token) return true;
-        if (token.length >= 4 && candidate.includes(token)) return true;
-        if (token.length >= 3 && candidate.startsWith(token)) return true;
-
-        if (Math.abs(candidate.length - token.length) > 2) return false;
-
-        const maxDistance =
-          token.length >= 9 ? 2 :
-          token.length >= 5 ? 1 :
-          0;
-
-        return maxDistance > 0 && levenshtein(token, candidate) <= maxDistance;
-      });
-    }
-
-    function buildSearchIndex(row) {
-      const aliases = [
-        ...(categoryAliases[row.categorie] || []),
-        ...(experienceAliases[row.metier] || []),
-        ...(serviceAliases[row.service] || []),
-        ...(establishmentAliases[row.etablissement] || []),
-        ...(competenceAliases[row.competence] || [])
-      ];
-
-      const joined = [
-        row.competence,
-        row.categorie,
-        row.metier,
-        row.service,
-        row.etablissement,
-        ...aliases
-      ].join(' ');
-
-      return {
-        text: normalize(joined),
-        tokens: tokenize(joined)
-      };
-    }
-
-    const indexedSkills = skillsData.map((skill) => {
-      const searchIndex = buildSearchIndex(skill);
-      return {
-        ...skill,
-        _searchText: searchIndex.text,
-        _searchTokens: searchIndex.tokens
-      };
-    });
-
-    function rowMatches(row, query) {
-      const cleanedQuery = normalize(query);
-      if (!cleanedQuery) return true;
-
-      const queryTokens = tokenize(query);
-
-      if (row._searchText.includes(cleanedQuery)) return true;
-
-      return queryTokens.every((token) => fuzzyTokenMatch(token, row._searchTokens));
-    }
-
-    function aggregateByCategory(data) {
-      return data.reduce((acc, item) => {
-        acc[item.categorie] = (acc[item.categorie] || 0) + 1;
-        return acc;
-      }, {});
-    }
-
-    function aggregateByExperience(data) {
-      return data.reduce((acc, item) => {
-        if (!acc[item.metier]) acc[item.metier] = {};
-        acc[item.metier][item.categorie] = (acc[item.metier][item.categorie] || 0) + 1;
-        return acc;
-      }, {});
-    }
-
-    function renderDomainChart() {
-      const container = document.getElementById('domain-chart');
-      const counts = Object.entries(aggregateByCategory(skillsData))
-        .sort((a, b) => b[1] - a[1]);
-
-      const max = Math.max(...counts.map(([, value]) => value));
-
-      container.innerHTML = counts.map(([label, value]) => `
-        <div class="skills-bar-row">
-          <div class="skills-bar-labels">
-            <span>${label}</span>
-            <strong>${value}</strong>
-          </div>
-          <div class="skills-bar-track">
-            <span class="skills-bar-fill" style="width:${(value / max) * 100}%; background:${categoryColors[label] || '#123f73'};"></span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderTechnicalChart() {
-      const container = document.getElementById('technical-chart');
-      const legend = document.getElementById('technical-legend');
-      const labels = ['Data', 'Informatique', 'Cloud'];
-      const counts = aggregateByCategory(skillsData);
-      const total = labels.reduce((sum, label) => sum + (counts[label] || 0), 0);
-
-      let current = 0;
-      const segments = labels.map((label) => {
-        const value = counts[label] || 0;
-        const angle = total ? (value / total) * 360 : 0;
-        const start = current;
-        current += angle;
-
-        return {
-          label,
-          value,
-          percentage: total ? (value / total) * 100 : 0,
-          start,
-          end: current
-        };
-      });
-
-      const gradient = segments
-        .map((segment) => `${categoryColors[segment.label]} ${segment.start}deg ${segment.end}deg`)
-        .join(', ');
-
-      container.style.background = `conic-gradient(${gradient})`;
-      container.innerHTML = `<div class="skills-donut-hole"><strong>${total}</strong></div>`;
-
-      legend.innerHTML = segments.map((segment) => `
-        <div class="skills-legend-item">
-          <span class="skills-legend-swatch" style="background:${categoryColors[segment.label]};"></span>
-          <div>
-            <strong>${segment.label}</strong>
-            <span>${segment.value} · ${segment.percentage.toFixed(1).replace('.', ',')} %</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderExperienceChart() {
-      const container = document.getElementById('experience-chart');
-      const legend = document.getElementById('experience-legend');
-
-      const order = [
-        "Licence d'economie",
-        "Master - Systeme d'Information Economique et Financier",
-        "FinOps (Stage)"
-      ];
-
-      const categories = ['Finance', 'Data', 'Informatique', 'Cloud', 'Autres'];
-      const counts = aggregateByExperience(skillsData);
-
-      const totals = order.map((label) =>
-        categories.reduce((sum, category) => sum + ((counts[label] && counts[label][category]) || 0), 0)
-      );
-
-      const max = Math.max(...totals);
-
-      container.innerHTML = order.map((label, index) => {
-        const total = totals[index];
-
-        const stacks = categories.map((category) => {
-          const value = (counts[label] && counts[label][category]) || 0;
-          if (!value) return '';
-          return `
-            <span
-              class="skills-stack-part"
-              style="height:${(value / max) * 100}%; background:${categoryColors[category]};"
-              title="${category} : ${value}"
-            ></span>
-          `;
-        }).join('');
-
-        return `
-          <div class="skills-stack-col">
-            <div class="skills-stack-bar">${stacks}</div>
-            <strong>${total}</strong>
-            <span>${experienceShortLabels[label]}</span>
-          </div>
-        `;
-      }).join('');
-
-      legend.innerHTML = categories.map((category) => `
-        <div class="skills-legend-tag">
-          <span class="skills-legend-swatch" style="background:${categoryColors[category]};"></span>
-          <span>${category}</span>
-        </div>
-      `).join('');
-    }
-
-    const tableBody = document.getElementById('skills-table-body');
-    const resultsLabel = document.getElementById('skills-results');
-    const searchInput = document.getElementById('skills-search');
-    const resetButton = document.getElementById('skills-reset');
-    const modal = document.getElementById('skill-modal');
-
-    function openSkillModal(skill) {
-      document.getElementById('skill-modal-title').textContent = skill.competence;
-      document.getElementById('modal-category').textContent = skill.categorie;
-      document.getElementById('modal-metier').textContent = skill.metier;
-      document.getElementById('modal-service').textContent = skill.service;
-      document.getElementById('modal-etablissement').textContent = skill.etablissement;
-      modal.showModal();
-    }
-
-    function renderTable(data) {
-      if (!data.length) {
-        tableBody.innerHTML = `
-          <tr>
-            <td colspan="2">
-              <div class="skills-empty">
-                <strong>Aucun résultat</strong>
-                <span>Essaie un terme plus large : dev, cloud, banque, gestion, data, sql, python, reporting...</span>
-              </div>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tableBody.innerHTML = data.map((skill, index) => `
-        <tr>
-          <td>
-            <div class="skills-competence-cell">
-              <span class="skills-competence-name">${skill.competence}</span>
-              <span class="skills-competence-pill">${skill.categorie}</span>
-            </div>
-          </td>
-          <td class="skills-action-cell">
-            <button
-              class="skills-info-button"
-              type="button"
-              data-index="${index}"
-              aria-label="Afficher le détail de ${skill.competence}"
-            >i</button>
-          </td>
-        </tr>
-      `).join('');
-
-      tableBody.querySelectorAll('.skills-info-button').forEach((button) => {
-        button.addEventListener('click', () => {
-          openSkillModal(data[Number(button.dataset.index)]);
-        });
-      });
-    }
-
-    function updateResultsCount(count) {
-      resultsLabel.textContent = `${count} compétence${count > 1 ? 's' : ''} affichée${count > 1 ? 's' : ''}`;
-    }
-
-    function filterSkills() {
-      const query = searchInput.value;
-      const filtered = indexedSkills.filter((row) => rowMatches(row, query));
-      renderTable(filtered);
-      updateResultsCount(filtered.length);
-    }
-
-    function initSummary() {
-      document.getElementById('skills-total').textContent = skillsData.length;
-      document.getElementById('skills-domains').textContent = new Set(skillsData.map((item) => item.categorie)).size;
-      document.getElementById('skills-experiences').textContent = new Set(skillsData.map((item) => item.metier)).size;
-    }
-
-    searchInput.addEventListener('input', filterSkills);
-
-    resetButton.addEventListener('click', () => {
-      searchInput.value = '';
-      filterSkills();
-      searchInput.focus();
-    });
-
-    modal.addEventListener('click', (event) => {
-      const rect = modal.getBoundingClientRect();
-      const inDialog = (
-        rect.top <= event.clientY &&
-        event.clientY <= rect.top + rect.height &&
-        rect.left <= event.clientX &&
-        event.clientX <= rect.left + rect.width
-      );
-      if (!inDialog) modal.close();
-    });
-
-    initSummary();
-    renderDomainChart();
-    renderTechnicalChart();
-    renderExperienceChart();
-    filterSkills();
-  </script>
-</body>
+	<head>
+		<meta charset="utf-8"/>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
+		<meta content="Compétences techniques, analytiques et métiers de Driss El Bouffi." name="description"/>
+		<title>Driss El Bouffi — Compétences</title>
+		<link href="FrontPic/favicon.svg" rel="icon" type="image/svg+xml"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+		<link href="assets/css/theme.css" rel="stylesheet"/>
+	</head>
+	<body data-page="competences">
+		<div class="mise-en-page-site">
+			<div class="enveloppe-barre-laterale" data-sidebar-mount=""></div>
+			<main class="enveloppe-contenu">
+				<div class="conteneur-page">
+					<section class="panneau competences-vitrine" data-reveal="">
+						<div class="competences-texte-vitrine">
+							<span class="accroche">Compétences</span>
+							<h1>Compétences techniques, data, cloud et finance</h1>
+							<p class="competences-texte-intro">
+								Sur cette page, je mets en avant les compétences que j’ai acquises et consolidées au fil de mon parcours.
+								Elles résultent de ma formation en licence, de mon master SIEF, et surtout de mon stage de fin d’études réalisé chez Septeo,
+								qui m’a permis de les mettre en pratique dans un environnement professionnel concret.
+							</p>
+						</div>
+						<div aria-label="Synthèse des compétences" class="competences-infos-vitrine">
+							<article class="competences-mini-carte">
+								<span class="competences-mini-etiquette">Compétences référencées</span>
+								<strong id="skills-total">73</strong>
+							</article>
+							<article class="competences-mini-carte">
+								<span class="competences-mini-etiquette">Domaines</span>
+								<strong id="skills-domains">5</strong>
+							</article>
+							<article class="competences-mini-carte">
+								<span class="competences-mini-etiquette">Expériences</span>
+								<strong id="skills-experiences">3</strong>
+							</article>
+						</div>
+					</section>
+					<section aria-label="Dashboard des compétences" class="competences-tableau-bord" data-reveal="">
+						<article class="panneau competences-carte-graphe">
+							<div class="competences-entete-carte">
+								<div>
+									<p class="carte-surtitre">Histogramme horizontal</p>
+									<h2 class="carte-titre">Répartition des compétences par domaine</h2>
+								</div>
+							</div>
+							<div aria-label="Répartition des compétences par domaine" class="competences-barres" id="domain-chart"></div>
+						</article>
+						<article class="panneau competences-carte-graphe">
+							<div class="competences-entete-carte">
+								<div>
+									<p class="carte-surtitre">Camembert</p>
+									<h2 class="carte-titre">Répartition du socle technique</h2>
+									<p class="competences-texte-carte">Part relative des compétences Data, Cloud et Informatique.</p>
+								</div>
+							</div>
+							<div class="competences-mise-page-anneau">
+								<div aria-hidden="true" class="competences-anneau" id="technical-chart"></div>
+								<div aria-label="Légende du socle technique" class="competences-legende" id="technical-legend"></div>
+							</div>
+						</article>
+						<article class="panneau competences-carte-graphe">
+							<div class="competences-entete-carte">
+								<div>
+									<p class="carte-surtitre">Barres empilées</p>
+									<h2 class="carte-titre">Compétences acquises par expérience</h2>
+								</div>
+							</div>
+							<div aria-label="Compétences acquises par expérience" class="competences-empile" id="experience-chart"></div>
+							<div aria-label="Légende des catégories" class="competences-legende competences-legende-en-ligne" id="experience-legend"></div>
+						</article>
+					</section>
+					<section class="panneau competences-panneau">
+						<div class="competences-entete-panneau">
+							<div>
+								<h2 class="titre-section">Explorer les compétences</h2>
+								<p class="texte-section competences-texte-section">
+									Vous recherchez une compétence particulière ?
+								</p>
+							</div>
+						</div>
+						<div class="competences-conteneur-recherche">
+							<label class="masque-visuel" for="skills-search">Rechercher une compétence</label>
+							<div class="competences-boite-recherche">
+								<span aria-hidden="true" class="competences-icone-recherche">⌕</span>
+								<input autocomplete="off" id="skills-search" placeholder="Ex. dev, cloud, banque, gestion, data, sql, python, k8s..." type="search"/>
+								<button class="competences-reinit" id="competences-reinit" type="button">Effacer</button>
+							</div>
+							<p class="competences-resultats" id="competences-resultats">73 compétences affichées</p>
+						</div>
+						<div class="competences-conteneur-tableau">
+							<table class="competences-tableau">
+								<thead>
+									<tr>
+										<th scope="col">Compétence</th>
+										<th class="competences-entete-action" scope="col">Détail</th>
+									</tr>
+								</thead>
+								<tbody id="skills-table-body"></tbody>
+							</table>
+						</div>
+					</section>
+				</div>
+			</main>
+		</div>
+		<dialog aria-labelledby="skill-modal-title" class="competences-fenetre" id="skill-modal">
+			<form class="competences-enveloppe-fenetre" method="dialog">
+				<div class="competences-entete-fenetre">
+					<div>
+						<p class="carte-surtitre">Détail</p>
+						<h2 class="carte-titre" id="skill-modal-title">Compétence</h2>
+					</div>
+					<button aria-label="Fermer" class="competences-fermeture-fenetre" type="submit">✕</button>
+				</div>
+				<div class="competences-grille-fenetre">
+					<article class="competences-element-fenetre">
+						<span>Catégorie</span>
+						<strong id="modal-category"></strong>
+					</article>
+					<article class="competences-element-fenetre">
+						<span>Expérience</span>
+						<strong id="modal-metier"></strong>
+					</article>
+					<article class="competences-element-fenetre">
+						<span>Service</span>
+						<strong id="modal-service"></strong>
+					</article>
+					<article class="competences-element-fenetre">
+						<span>Établissement</span>
+						<strong id="modal-etablissement"></strong>
+					</article>
+				</div>
+			</form>
+		</dialog>
+		<script src="assets/js/layout.js"></script>
+		<script src="assets/js/portfolio-data.js"></script>
+		<script src="assets/js/page-modules.js"></script>
+	</body>
 </html>
