@@ -1007,7 +1007,7 @@ body[data-page="formation"] .conteneur-page {
 	}
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
 	.formation-haut-carte,
 	.formation-conteneur-detail,
 	.actions-formation {
@@ -1080,7 +1080,7 @@ body[data-page="contact"] .carte-contact-ligne .valeur-rapide {
 	padding: 11px 16px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
 	.carte-contact-ligne {
 		flex-direction: column;
 		align-items: stretch;
@@ -1915,7 +1915,7 @@ body[data-page="competences"] .conteneur-page {
 }
 
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
 	.conteneur-lien-entete-section {
 		padding-bottom: 54px;
 	}
@@ -1932,7 +1932,7 @@ body[data-page="competences"] .conteneur-page {
 
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
 	.formation-sous-titre {
 		font-size: 1rem;
 	}
