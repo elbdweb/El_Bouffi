@@ -208,9 +208,24 @@
 
 	function initPageAccueil() {
 		if (currentPage !== 'index' || !window.Chart) return;
-		createIndexDonut('index-chart-data', [8, 13, 5], ['#2563eb', '#1f6b45', '#f2a007'], 26);
-		createIndexDonut('index-chart-informatique', [2, 10, 14], ['#2563eb', '#1f6b45', '#f2a007'], 26);
-		createIndexDonut('index-chart-finance', [9, 6, 3], ['#2563eb', '#1f6b45', '#f2a007'], 18);
+
+		const experiences = ['Licence d’économie', 'Master - Système d’Information Économique et Financier', 'FinOps (Stage)'];
+		const colors = ['#2563eb', '#1f6b45', '#f2a007'];
+		const domains = [
+			{ canvasId: 'index-chart-data', category: 'Data' },
+			{ canvasId: 'index-chart-informatique', categories: ['Informatique', 'Cloud'] },
+			{ canvasId: 'index-chart-finance', category: 'Finance' }
+		];
+
+		domains.forEach((domain) => {
+			const values = experiences.map((experience) => skillsData.filter((item) => {
+				const sameExperience = item.metier === experience;
+				const sameCategory = domain.category ? item.categorie === domain.category : domain.categories.includes(item.categorie);
+				return sameExperience && sameCategory;
+			}).length);
+			const total = values.reduce((sum, value) => sum + value, 0);
+			createIndexDonut(domain.canvasId, values, colors, total);
+		});
 
 		const cartesTableauxAccueil = Array.from(document.querySelectorAll('.carte-anneau-domaine'));
 		animerChargementTableaux(cartesTableauxAccueil);
@@ -225,7 +240,8 @@
 
 		const experienceShortLabels = {
 			"Licence d’économie": 'Licence',
-			"Master - Systeme d\'Information Economique et Financier": 'Master',
+			"Master - Système d’Information Économique et Financier": 'Master',
+			"Master - Systeme d'Information Economique et Financier": 'Master',
 			'FinOps (Stage)': 'Septeo'
 		};
 
