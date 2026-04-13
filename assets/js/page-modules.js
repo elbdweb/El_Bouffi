@@ -45,6 +45,22 @@
 		return normalize(value).split(/\s+/).filter(Boolean);
 	}
 
+	function sameLabel(left, right) {
+		return normalize(left) === normalize(right);
+	}
+
+	function getDictionaryValues(dictionary, key) {
+		if (!dictionary || key == null) return [];
+		if (Object.prototype.hasOwnProperty.call(dictionary, key)) return dictionary[key];
+		const normalizedKey = normalize(key);
+		for (const candidate in dictionary) {
+			if (Object.prototype.hasOwnProperty.call(dictionary, candidate) && normalize(candidate) === normalizedKey) {
+				return dictionary[candidate];
+			}
+		}
+		return [];
+	}
+
 	function escapeHtml(value) {
 		return String(value)
 			.replace(/&/g, '&amp;')
@@ -219,8 +235,10 @@
 
 		domains.forEach((domain) => {
 			const values = experiences.map((experience) => skillsData.filter((item) => {
-				const sameExperience = item.metier === experience;
-				const sameCategory = domain.category ? item.categorie === domain.category : domain.categories.includes(item.categorie);
+				const sameExperience = sameLabel(item.metier, experience);
+				const sameCategory = domain.category
+					? sameLabel(item.categorie, domain.category)
+					: domain.categories.some((category) => sameLabel(item.categorie, category));
 				return sameExperience && sameCategory;
 			}).length);
 			const total = values.reduce((sum, value) => sum + value, 0);
@@ -341,11 +359,11 @@
 
 		function buildSearchIndex(row) {
 			const aliases = [
-				...(categoryAliases[row.categorie] || []),
-				...(experienceAliases[row.metier] || []),
-				...(serviceAliases[row.service] || []),
-				...(establishmentAliases[row.etablissement] || []),
-				...(competenceAliases[row.competence] || [])
+				...(getDictionaryValues(categoryAliases, row.categorie) || []),
+				...(getDictionaryValues(experienceAliases, row.metier) || []),
+				...(getDictionaryValues(serviceAliases, row.service) || []),
+				...(getDictionaryValues(establishmentAliases, row.etablissement) || []),
+				...(getDictionaryValues(competenceAliases, row.competence) || [])
 			];
 			const joined = [row.competence, row.categorie, row.metier, row.service, row.etablissement, ...aliases].join(' ');
 			return { text: normalize(joined), tokens: tokenize(joined) };
@@ -512,7 +530,10 @@
 			const counts = aggregateByExperience(skillsData);
 			const datasets = categories.map((category) => ({
 				label: category,
-				data: order.map((experience) => (counts[experience] && counts[experience][category]) || 0),
+				data: order.map((experience) => {
+					const matchingExperience = Object.keys(counts).find((key) => sameLabel(key, experience));
+					return (matchingExperience && counts[matchingExperience][category]) || 0;
+				}),
 				backgroundColor: categoryColors[category] || '#123f73',
 				borderRadius: 0,
 				borderSkipped: false,
@@ -747,7 +768,7 @@
 		}
 
 		formationConfigs.forEach((config) => {
-			const rows = skillsData.filter((row) => row.metier === config.metier);
+			const rows = skillsData.filter((row) => sameLabel(row.metier, config.metier));
 			renderMacroDonut(`${config.prefix}-macro-donut`, `${config.prefix}-macro-legend`, rows);
 			renderCategoryBars(`${config.prefix}-category-bars`, rows);
 			renderTags(`${config.prefix}-tags`, rows);
