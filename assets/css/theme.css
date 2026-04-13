@@ -1322,6 +1322,7 @@ body[data-page="competences"] .conteneur-page {
 	gap: 18px;
 	min-height: 100%;
 	min-width: 0;
+	overflow: hidden;
 }
 
 .competences-entete-carte {
@@ -1966,14 +1967,23 @@ body[data-page="competences"] .conteneur-page {
 }
 
 
-.conteneur-graphe {
+.conteneur-graphe,
+.conteneur-graphe-haut,
+.conteneur-graphe-anneau,
+.conteneur-graphe-formation-anneau,
+.conteneur-graphe-formation-barres,
+.conteneur-graphe-anneau-domaine {
 	position: relative;
+	overflow: hidden;
+}
+
+.conteneur-graphe {
 	width: 100%;
-	min-height: 300px;
+	height: 300px;
 }
 
 .conteneur-graphe-haut {
-	min-height: 320px;
+	height: 320px;
 }
 
 .conteneur-graphe canvas,
@@ -1981,20 +1991,20 @@ body[data-page="competences"] .conteneur-page {
 .conteneur-graphe-formation-anneau canvas,
 .conteneur-graphe-formation-barres canvas,
 .conteneur-graphe-anneau-domaine canvas {
+	position: absolute;
+	inset: 0;
 	display: block;
 	width: 100% !important;
 	height: 100% !important;
 }
 
 .conteneur-graphe-anneau {
-	position: relative;
 	width: 200px;
 	height: 200px;
 	margin: 0 auto;
 }
 
 .conteneur-graphe-anneau-domaine {
-	position: relative;
 	width: 172px;
 	height: 172px;
 	margin: 2px auto 0;
@@ -2005,16 +2015,14 @@ body[data-page="competences"] .conteneur-page {
 }
 
 .conteneur-graphe-formation-anneau {
-	position: relative;
 	width: 142px;
 	height: 142px;
 	margin: 0 auto;
 }
 
 .conteneur-graphe-formation-barres {
-	position: relative;
 	width: 100%;
-	min-height: 230px;
+	height: 230px;
 }
 
 @media (max-width: 1180px) {
@@ -2026,8 +2034,11 @@ body[data-page="competences"] .conteneur-page {
 
 @media (max-width: 860px) {
 	.conteneur-graphe,
-	.conteneur-graphe-haut,
+	.conteneur-graphe-haut {
+		height: 280px;
+	}
+
 	.conteneur-graphe-formation-barres {
-		min-height: 280px;
+		height: 280px;
 	}
 }
