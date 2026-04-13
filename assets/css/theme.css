@@ -764,13 +764,10 @@ h1 {
 	}
 
 	.grille-trois,
+	.grille-rapide,
 	.grille-info,
 	.grille-chronologie {
 		grid-template-columns: 1fr;
-	}
-
-	body[data-page="contact"] .grille-rapide {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 
@@ -866,11 +863,6 @@ body[data-page="formation"] .conteneur-page {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 22px;
-}
-
-body[data-page="formation"] .formation-grille {
-	max-width: 980px;
-	margin: 0 auto;
 }
 
 .formation-pile {
@@ -1089,10 +1081,6 @@ body[data-page="contact"] .carte-contact-ligne .valeur-rapide {
 }
 
 @media (max-width: 640px) {
-	body[data-page="contact"] .grille-rapide {
-		grid-template-columns: 1fr;
-	}
-
 	.carte-contact-ligne {
 		flex-direction: column;
 		align-items: stretch;
@@ -2041,5 +2029,12 @@ body[data-page="competences"] .conteneur-page {
 	.conteneur-graphe-haut,
 	.conteneur-graphe-formation-barres {
 		min-height: 280px;
+	}
+}
+
+
+@media (min-width: 641px) and (max-width: 980px) {
+	body[data-page="contact"] .grille-rapide.grille-contact-compacte {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
