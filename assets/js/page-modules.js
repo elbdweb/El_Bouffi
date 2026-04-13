@@ -224,7 +224,7 @@
 		if (!requiredIds.every((id) => document.getElementById(id))) return;
 
 		const experienceShortLabels = {
-			"Licence d'economie": 'Licence',
+			"Licence d’économie": 'Licence',
 			"Master - Systeme d\'Information Economique et Financier": 'Master',
 			'FinOps (Stage)': 'Septeo'
 		};
@@ -238,18 +238,18 @@
 		};
 
 		const experienceAliases = {
-			"Licence d'economie": ['licence', 'universite', 'faculte', 'academique', 'fondamentaux', 'socle', 'economie', 'eco', 'formation initiale'],
-			"Master - Systeme d'Information Economique et Financier": ['master', 'sief', 'mbfa', 'specialisation', 'avance', 'expertise', 'universite', 'faculte', 'formation specialisee'],
+			"Licence d’économie": ['licence', 'universite', 'faculte', 'academique', 'fondamentaux', 'socle', 'economie', 'eco', 'formation initiale'],
+			"Master - Système d’Information Économique et Financier": ['master', 'sief', 'mbfa', 'specialisation', 'avance', 'expertise', 'universite', 'faculte', 'formation specialisee'],
 			"FinOps (Stage)": ['septeo', 'stage', 'entreprise', 'professionnel', 'pro', 'finops', 'experience', 'metier', 'infrastructure', 'cloud']
 		};
 
 		const serviceAliases = {
-			"Faculte d'economie": ['universite', 'academique', 'enseignement', 'faculte', 'campus'],
+			"Faculte d’économie": ['universite', 'academique', 'enseignement', 'faculte', 'campus'],
 			'Infrastructure et Cloud': ['infra', 'cloud', 'ops', 'devops', 'production', 'run']
 		};
 
 		const establishmentAliases = {
-			'Universite de Montpellier': ['universite', 'montpellier', 'enseignement superieur', 'academique'],
+			'Université de Montpellier': ['universite', 'montpellier', 'enseignement superieur', 'academique'],
 			Septeo: ['septeo', 'entreprise', 'professionnel', 'societe', 'business']
 		};
 
@@ -259,7 +259,7 @@
 			"Economie internationale": ['economie', 'international', 'commerce', 'mondialisation'],
 			"Droit des affaires": ['droit', 'juridique', 'business law', 'reglementation'],
 			"Management des organisations": ['management', 'gestion', 'organisation', 'pilotage'],
-			Cybersecurite: ['securite', 'security', 'cyber', 'protection', 'risque'],
+			Cybersécurité: ['securite', 'security', 'cyber', 'protection', 'risque'],
 			RGPD: ['conformite', 'privacy', 'donnees personnelles', 'reglementation', 'gdpr'],
 			"Droit informatique": ['juridique', 'conformite', 'reglementation', 'rgpd'],
 			"Aide a la decision": ['decision', 'pilotage', 'analyse', 'management', 'reporting'],
@@ -268,55 +268,55 @@
 			kubectl: ['k8s', 'cli', 'commande', 'terminal', 'cloud'],
 			Helm: ['k8s', 'charts', 'package manager', 'deploy', 'cloud'],
 			"Orchestration de conteneurs": ['containers', 'conteneurs', 'k8s', 'devops', 'cloud'],
-			"Deploiement applicatif": ['deploy', 'deployment', 'release', 'devops', 'mise en production'],
+			"Déploiement applicatif": ['deploy', 'deployment', 'release', 'devops', 'mise en production'],
 			"Configuration applicative": ['config', 'application', 'settings', 'parametrage'],
-			"Persistance des donnees": ['stockage', 'data', 'storage', 'persistency', 'database'],
+			"Persistance des données": ['stockage', 'data', 'storage', 'persistency', 'database'],
 			Observabilite: ['monitoring', 'logs', 'metriques', 'traces', 'supervision'],
-			"Traitement de donnees": ['data processing', 'donnees', 'analyse', 'etl'],
-			"Gestion de donnees": ['data management', 'donnees', 'governance', 'quality'],
-			"Analyse de donnees": ['analytics', 'data analysis', 'analyse', 'insights'],
+			"Traitement de données": ['data processing', 'donnees', 'analyse', 'etl'],
+			"Gestion de données": ['data management', 'donnees', 'governance', 'quality'],
+			"Analyse de données": ['analytics', 'data analysis', 'analyse', 'insights'],
 			Statistiques: ['stats', 'quantitatif', 'analyse statistique'],
-			Probabilites: ['stats', 'mathematiques', 'modele probabiliste'],
-			Echantillonnage: ['sampling', 'stats', 'sondage'],
-			Econometrie: ['regression', 'modelisation', 'modele', 'quantitatif'],
+			Probabilités: ['stats', 'mathematiques', 'modele probabiliste'],
+			Échantillonnage: ['sampling', 'stats', 'sondage'],
+			Économétrie: ['regression', 'modelisation', 'modele', 'quantitatif'],
 			Optimisation: ['optimisation mathematique', 'recherche operationnelle'],
-			"Entrepot de donnees": ['data warehouse', 'warehouse', 'bdd', 'database'],
+			"Entrepôt de données": ['data warehouse', 'warehouse', 'bdd', 'database'],
 			"Big data": ['data engineering', 'donnees massives', 'volume', 'scale'],
 			"Data mining": ['fouille de donnees', 'machine learning', 'ml', 'analyse predictive'],
 			"Data visualisation": ['dataviz', 'dashboard', 'graphique', 'bi', 'visualisation'],
 			"Power BI": ['bi', 'dashboard', 'reporting', 'visualisation'],
 			"Intelligence artificielle": ['ia', 'ai', 'machine learning', 'ml'],
 			LLM: ['ia', 'ai', 'genai', 'intelligence artificielle', 'language model'],
-			"Series temporelles": ['time series', 'forecast', 'prevision'],
+			"Séries temporelles": ['time series', 'forecast', 'prevision'],
 			Prevision: ['forecast', 'projection', 'anticipation'],
 			SQL: ['bdd', 'database', 'requete', 'query', 'base de donnees'],
 			MySQL: ['sql', 'bdd', 'database', 'base de donnees'],
-			"Modelisation de donnees": ['data model', 'schema', 'base de donnees'],
-			"Historisation des donnees": ['historique', 'versioning', 'data lineage', 'tracabilite'],
-			"Tracabilite des calculs": ['audit', 'lineage', 'controle', 'fiabilite'],
+			"Modélisation de données": ['data model', 'schema', 'base de donnees'],
+			"Historisation des données": ['historique', 'versioning', 'data lineage', 'tracabilite'],
+			"Traçabilité des calculs": ['audit', 'lineage', 'controle', 'fiabilite'],
 			"Analyse financiere": ['finance', 'performance', 'ratios', 'bilan'],
-			"Comptabilite generale": ['compta', 'comptabilite', 'gestion', 'finance'],
-			"Comptabilite analytique": ['compta', 'couts', 'gestion', 'finance'],
+			"Comptabilité générale": ['compta', 'comptabilite', 'gestion', 'finance'],
+			"Comptabilité analytique": ['compta', 'couts', 'gestion', 'finance'],
 			"Finance internationale": ['banque', 'bancaire', 'international', 'marche'],
-			"Economie financiere": ['finance', 'bancaire', 'marche'],
+			"Économie financière": ['finance', 'bancaire', 'marche'],
 			"Finance de marche": ['trading', 'marche', 'banque', 'finance'],
-			"Finance d'entreprise": ['corporate finance', 'entreprise', 'finance'],
-			"Modeles financiers": ['finance quantitative', 'modelisation', 'prediction'],
-			"Prevision financiere": ['forecast', 'finance', 'projection', 'budget'],
-			"Allocation de couts": ['gestion', 'cost allocation', 'finops', 'couts'],
+			"Finance d’entreprise": ['corporate finance', 'entreprise', 'finance'],
+			"Modèles financiers": ['finance quantitative', 'modelisation', 'prediction'],
+			"Prévision financière": ['forecast', 'finance', 'projection', 'budget'],
+			"Allocation de coûts": ['gestion', 'cost allocation', 'finops', 'couts'],
 			Amortissement: ['compta', 'finance', 'gestion', 'cout'],
 			"Automatisation des calculs financiers": ['automation', 'finance', 'automatisation', 'finops'],
-			"Fondamentaux de l'Informatique": ['informatique', 'tech', 'bases', 'fondamentaux'],
-			"Base de donnees": ['bdd', 'database', 'sql', 'schema'],
+			"Fondamentaux de l’Informatique": ['informatique', 'tech', 'bases', 'fondamentaux'],
+			"Base de données": ['bdd', 'database', 'sql', 'schema'],
 			Algorithmique: ['algo', 'programmation', 'logique', 'code'],
 			Programmation: ['code', 'developpement', 'dev', 'software'],
 			Python: ['dev', 'developpement', 'programmation', 'script', 'automation', 'automatisation'],
 			VBA: ['excel', 'macro', 'automatisation', 'office'],
 			JavaScript: ['js', 'web', 'frontend', 'developpement'],
 			SAS: ['statistiques', 'analyse', 'data', 'bi'],
-			"Systemes d'information": ['si', 'information systems', 'architecture', 'organisation'],
+			"Systèmes d’information": ['si', 'information systems', 'architecture', 'organisation'],
 			Linux: ['systeme', 'terminal', 'shell', 'infra', 'ops'],
-			"Reseau informatique": ['network', 'reseau', 'tcp ip', 'dns', 'infra'],
+			"Réseau informatique": ['network', 'reseau', 'tcp ip', 'dns', 'infra'],
 			Git: ['github', 'versioning', 'versionnement', 'repository', 'repo'],
 			PHP: ['web', 'backend', 'developpement', 'serveur'],
 			Twig: ['template', 'php', 'frontend', 'web'],
@@ -491,7 +491,7 @@
 				}))
 			);
 
-			const order = ["Licence d'economie", "Master - Systeme d'Information Economique et Financier", 'FinOps (Stage)'];
+			const order = ["Licence d’économie", "Master - Système d’Information Économique et Financier", 'FinOps (Stage)'];
 			const categories = ['Finance', 'Data', 'Informatique', 'Cloud', 'Autres'];
 			const counts = aggregateByExperience(skillsData);
 			const datasets = categories.map((category) => ({
@@ -660,8 +660,8 @@
 		if (!window.Chart) return;
 		const formationConfigs = [
 			{ metier: 'FinOps (Stage)', prefix: 'stage' },
-			{ metier: "Master - Systeme d'Information Economique et Financier", prefix: 'master' },
-			{ metier: "Licence d'economie", prefix: 'licence' }
+			{ metier: "Master - Système d’Information Économique et Financier", prefix: 'master' },
+			{ metier: "Licence d’économie", prefix: 'licence' }
 		];
 		const macroColors = { economie: '#8f1d3f', informatique: '#1f6b45' };
 		const macroLabels = { economie: 'Économie / Finance', informatique: 'Informatique / Data / Cloud' };

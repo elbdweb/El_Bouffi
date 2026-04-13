@@ -1001,7 +1001,7 @@ body[data-page="formation"] .conteneur-page {
 	padding: 0 32px 32px;
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 980px) {
 	.formation-grille {
 		grid-template-columns: 1fr;
 	}
@@ -1080,7 +1080,7 @@ body[data-page="contact"] .carte-contact-ligne .valeur-rapide {
 	padding: 11px 16px;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 720px) {
 	.carte-contact-ligne {
 		flex-direction: column;
 		align-items: stretch;
@@ -1915,7 +1915,7 @@ body[data-page="competences"] .conteneur-page {
 }
 
 
-@media (max-width: 860px) {
+@media (max-width: 720px) {
 	.conteneur-lien-entete-section {
 		padding-bottom: 54px;
 	}
