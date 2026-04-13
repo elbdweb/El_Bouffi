@@ -3,7 +3,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8"/>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
 		<meta content="Formation universitaire et expérience professionnelle de Driss El Bouffi." name="description"/>
 		<title>Driss El Bouffi — Formation</title>
 		<link href="FrontPic/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -18,7 +18,7 @@
 			<main class="enveloppe-contenu">
 				<div class="conteneur-page">
 					<section class="formation-grille formation-pile" data-reveal="">
-						<article class="panneau formation-carte formation-parcours-stage">
+						<article class="panneau formation-carte formation-parcours-stage" data-reveal="">
 							<div class="formation-haut-carte">
 								<span class="formation-surtitre">Septeo — Infrastructure et Cloud</span>
 								<h1 class="formation-titre">FinOps</h1>
@@ -34,13 +34,13 @@
 										<article class="formation-carte-figure">
 											<h3>Répartition du socle</h3>
 											<div class="formation-panneau-anneau">
-												<div aria-hidden="true" class="formation-graphe-anneau" id="stage-macro-donut"></div>
+												<div class="conteneur-graphe-formation-anneau"><canvas aria-label="Répartition du socle du stage" id="stage-macro-donut"></canvas></div>
 												<div aria-label="Répartition du socle du stage" class="formation-liste-legende" id="stage-macro-legend"></div>
 											</div>
 										</article>
 										<article class="formation-carte-figure">
 											<h3>Répartition par catégorie</h3>
-											<div aria-label="Répartition des catégories du stage" class="formation-liste-barres" id="stage-category-bars"></div>
+											<div class="conteneur-graphe-formation-barres"><canvas aria-label="Répartition des catégories du stage" id="stage-category-bars"></canvas></div>
 										</article>
 									</div>
 								</section>
@@ -50,7 +50,7 @@
 								</section>
 							</div>
 						</article>
-						<article class="panneau formation-carte formation-parcours-master">
+						<article class="panneau formation-carte formation-parcours-master" data-reveal="">
 							<div class="formation-haut-carte">
 								<span class="formation-surtitre">Faculté d'économie - Université de Montpellier</span>
 								<h1 class="formation-titre">Système d’Information Économique et Financier</h1>
@@ -66,13 +66,13 @@
 										<article class="formation-carte-figure">
 											<h3>Répartition du socle</h3>
 											<div class="formation-panneau-anneau">
-												<div aria-hidden="true" class="formation-graphe-anneau" id="master-macro-donut"></div>
+												<div class="conteneur-graphe-formation-anneau"><canvas aria-label="Répartition du socle du master" id="master-macro-donut"></canvas></div>
 												<div aria-label="Répartition du socle du master" class="formation-liste-legende" id="master-macro-legend"></div>
 											</div>
 										</article>
 										<article class="formation-carte-figure">
 											<h3>Répartition par catégorie</h3>
-											<div aria-label="Répartition des catégories du master" class="formation-liste-barres" id="master-category-bars"></div>
+											<div class="conteneur-graphe-formation-barres"><canvas aria-label="Répartition des catégories du master" id="master-category-bars"></canvas></div>
 										</article>
 									</div>
 								</section>
@@ -85,7 +85,7 @@
 								</div>
 							</div>
 						</article>
-						<article class="panneau formation-carte formation-parcours-licence">
+						<article class="panneau formation-carte formation-parcours-licence" data-reveal="">
 							<div class="formation-haut-carte">
 								<span class="formation-surtitre">Faculté d'économie - Université de Montpellier</span>
 								<h1 class="formation-titre">Licence d'Économie</h1>
@@ -101,13 +101,13 @@
 										<article class="formation-carte-figure">
 											<h3>Répartition du socle</h3>
 											<div class="formation-panneau-anneau">
-												<div aria-hidden="true" class="formation-graphe-anneau" id="licence-macro-donut"></div>
+												<div class="conteneur-graphe-formation-anneau"><canvas aria-label="Répartition du socle de la licence" id="licence-macro-donut"></canvas></div>
 												<div aria-label="Répartition du socle de la licence" class="formation-liste-legende" id="licence-macro-legend"></div>
 											</div>
 										</article>
 										<article class="formation-carte-figure">
 											<h3>Répartition par catégorie</h3>
-											<div aria-label="Répartition des catégories de la licence" class="formation-liste-barres" id="licence-category-bars"></div>
+											<div class="conteneur-graphe-formation-barres"><canvas aria-label="Répartition des catégories de la licence" id="licence-category-bars"></canvas></div>
 										</article>
 									</div>
 								</section>
@@ -125,6 +125,7 @@
 			</main>
 		</div>
 		<script src="assets/js/layout.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 		<script src="assets/js/portfolio-data.js"></script>
 		<script src="assets/js/page-modules.js"></script>
 	</body>

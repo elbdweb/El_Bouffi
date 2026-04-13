@@ -1,10 +1,10 @@
 (function () {
 	const portfolio = window.PORTFOLIO_DATA;
 	const currentPage = document.body && document.body.dataset ? document.body.dataset.page : '';
-
 	if (!portfolio || !currentPage) return;
 
 	const { skillsData, categoryColors } = portfolio;
+	const chartInstances = [];
 
 	function uniqueCompetences(rows) {
 		const seen = new Set();
@@ -45,7 +45,6 @@
 		return normalize(value).split(/\s+/).filter(Boolean);
 	}
 
-
 	function escapeHtml(value) {
 		return String(value)
 			.replace(/&/g, '&amp;')
@@ -53,11 +52,6 @@
 			.replace(/>/g, '&gt;')
 			.replace(/"/g, '&quot;')
 			.replace(/'/g, '&#39;');
-	}
-
-	function safeCssColor(value, fallback = '#123f73') {
-		const normalized = String(value || '').trim();
-		return /^#([0-9a-f]{3,8})$/i.test(normalized) ? normalized : fallback;
 	}
 
 	function animerChargementTableaux(conteneurs) {
@@ -76,51 +70,147 @@
 		});
 	}
 
-	function levenshtein(a, b) {
-		if (a === b) return 0;
-		if (!a.length) return b.length;
-		if (!b.length) return a.length;
-
-		const matrix = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
-
-		for (let i = 0; i <= a.length; i += 1) matrix[i][0] = i;
-		for (let j = 0; j <= b.length; j += 1) matrix[0][j] = j;
-
-		for (let i = 1; i <= a.length; i += 1) {
-			for (let j = 1; j <= b.length; j += 1) {
-				const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-				matrix[i][j] = Math.min(
-					matrix[i - 1][j] + 1,
-					matrix[i][j - 1] + 1,
-					matrix[i - 1][j - 1] + cost
-				);
-			}
+	function destroyCharts() {
+		while (chartInstances.length) {
+			const chart = chartInstances.pop();
+			if (chart && typeof chart.destroy === 'function') chart.destroy();
 		}
-
-		return matrix[a.length][b.length];
 	}
 
-	function fuzzyTokenMatch(token, candidates) {
-		return candidates.some((candidate) => {
-			if (!candidate || candidate.length < 3) return false;
-			if (candidate === token) return true;
-			if (token.length >= 4 && candidate.includes(token)) return true;
-			if (token.length >= 3 && candidate.startsWith(token)) return true;
+	function getCssVariable(name, fallback) {
+		const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+		return value || fallback;
+	}
 
-			if (Math.abs(candidate.length - token.length) > 2) return false;
+	function commonChartOptions() {
+		return {
+			responsive: true,
+			maintainAspectRatio: false,
+			animation: {
+				duration: 850,
+				easing: 'easeOutCubic'
+			},
+			plugins: {
+				legend: { display: false },
+				tooltip: {
+					backgroundColor: 'rgba(8, 19, 34, 0.92)',
+					titleColor: '#f4fbff',
+					bodyColor: '#f4fbff',
+					padding: 12,
+					displayColors: true,
+					cornerRadius: 12
+				}
+			}
+		};
+	}
 
-			const maxDistance =
-				token.length >= 9 ? 2 :
-				token.length >= 5 ? 1 :
-				0;
+	function registerChart(canvas, config) {
+		if (!canvas || !window.Chart) return null;
+		const instance = new window.Chart(canvas, config);
+		chartInstances.push(instance);
+		return instance;
+	}
 
-			return maxDistance > 0 && levenshtein(token, candidate) <= maxDistance;
+	function createZeroData(values) {
+		return values.map(() => 0);
+	}
+
+	function queueChartAnimation(chart, targetDatasets, delay = 240) {
+		if (!chart || !Array.isArray(targetDatasets) || !targetDatasets.length) return;
+		const safeTargets = targetDatasets.map((dataset) => dataset.map((value) => Number(value) || 0));
+		window.setTimeout(() => {
+			chart.data.datasets.forEach((dataset, index) => {
+				dataset.data = safeTargets[index].slice();
+			});
+			chart.update();
+		}, delay);
+	}
+
+	function renderLegend(container, items, variant) {
+		if (!container) return;
+		if (variant === 'inline') {
+			container.innerHTML = items.map((item) => `
+				<div class="competences-etiquette-legende">
+					<span class="competences-echantillon-legende" style="background:${item.color};"></span>
+					<span>${escapeHtml(item.label)}</span>
+				</div>
+			`).join('');
+			return;
+		}
+		if (variant === 'formation') {
+			container.innerHTML = items.map((item) => `
+				<div class="formation-element-legende">
+					<span class="formation-pastille-legende" style="background:${item.color};"></span>
+					<div>
+						<strong>${escapeHtml(item.label)}</strong>
+						<span>${escapeHtml(item.value)}</span>
+					</div>
+				</div>
+			`).join('');
+			return;
+		}
+		container.innerHTML = items.map((item) => `
+			<div class="competences-element-legende">
+				<span class="competences-echantillon-legende" style="background:${item.color};"></span>
+				<div>
+					<strong>${escapeHtml(item.label)}</strong>
+					<span>${escapeHtml(item.value)}</span>
+				</div>
+			</div>
+		`).join('');
+	}
+
+	function createCenterTextPlugin(textTop, textBottom) {
+		return {
+			id: `centerText-${textTop}-${textBottom}`,
+			afterDraw(chart) {
+				const meta = chart.getDatasetMeta(0);
+				if (!meta || !meta.data || !meta.data.length) return;
+				const { ctx } = chart;
+				const x = meta.data[0].x;
+				const y = meta.data[0].y;
+				ctx.save();
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'middle';
+				ctx.fillStyle = '#102844';
+				ctx.font = '800 30px Inter, Segoe UI, sans-serif';
+				ctx.fillText(String(textTop), x, y - 8);
+				ctx.fillStyle = '#677b91';
+				ctx.font = '700 11px Inter, Segoe UI, sans-serif';
+				ctx.fillText(String(textBottom), x, y + 18);
+				ctx.restore();
+			}
+		};
+	}
+
+	function createIndexDonut(canvasId, values, colors, total) {
+		const canvas = document.getElementById(canvasId);
+		if (!canvas) return;
+		const chart = registerChart(canvas, {
+			type: 'doughnut',
+			data: {
+				labels: ['Licence', 'Master', 'Stage'],
+				datasets: [{
+					data: createZeroData(values),
+					backgroundColor: colors,
+					borderWidth: 0,
+					hoverOffset: 4
+				}]
+			},
+			options: {
+				...commonChartOptions(),
+				cutout: '62%'
+			},
+			plugins: [createCenterTextPlugin(total, 'compétences')]
 		});
+		queueChartAnimation(chart, [values]);
 	}
-
 
 	function initPageAccueil() {
-		if (currentPage !== 'index') return;
+		if (currentPage !== 'index' || !window.Chart) return;
+		createIndexDonut('index-chart-data', [8, 13, 5], ['#2563eb', '#1f6b45', '#f2a007'], 26);
+		createIndexDonut('index-chart-informatique', [2, 10, 14], ['#2563eb', '#1f6b45', '#f2a007'], 26);
+		createIndexDonut('index-chart-finance', [9, 6, 3], ['#2563eb', '#1f6b45', '#f2a007'], 18);
 
 		const cartesTableauxAccueil = Array.from(document.querySelectorAll('.carte-anneau-domaine'));
 		animerChargementTableaux(cartesTableauxAccueil);
@@ -131,7 +221,6 @@
 			'domain-chart', 'technical-chart', 'technical-legend', 'experience-chart', 'experience-legend',
 			'skills-table-body', 'competences-resultats', 'skills-search', 'competences-reinit', 'skill-modal'
 		];
-
 		if (!requiredIds.every((id) => document.getElementById(id))) return;
 
 		const experienceShortLabels = {
@@ -141,48 +230,17 @@
 		};
 
 		const categoryAliases = {
-			Finance: [
-				'finance', 'financier', 'financiere', 'financiers', 'bancaire', 'banque', 'argent',
-				'gestion', 'business', 'budget', 'cout', 'couts', 'comptabilite', 'compta',
-				'analyse financiere', 'performance', 'pilotage', 'decision', 'reporting', 'mbfa'
-			],
-			Data: [
-				'data', 'donnee', 'donnees', 'dataset', 'analytics', 'analytique', 'analyse',
-				'statistiques', 'stats', 'econometrie', 'machine learning', 'ml', 'ia', 'ai',
-				'bi', 'dashboard', 'visualisation', 'dataviz', 'base de donnees', 'bdd',
-				'database', 'sql', 'mysql', 'entrepot', 'historisation', 'tracabilite', 'prevision'
-			],
-			Informatique: [
-				'informatique', 'tech', 'technique', 'developpement', 'developpeur', 'dev',
-				'programmation', 'code', 'logiciel', 'application', 'web', 'backend',
-				'frontend', 'script', 'software', 'algorithmique', 'systeme', 'reseau',
-				'securite', 'bases', 'bdd', 'database'
-			],
-			Cloud: [
-				'cloud', 'devops', 'infra', 'infrastructure', 'ops', 'plateforme', 'platform',
-				'kubernetes', 'k8s', 'kubectl', 'helm', 'orchestration', 'conteneur',
-				'conteneurs', 'container', 'containers', 'deploiement', 'deployment',
-				'observabilite', 'run', 'sre'
-			],
-			Autres: [
-				'gestion', 'pilotage', 'decision', 'gouvernance', 'juridique', 'conformite',
-				'management', 'organisation', 'tableau de bord', 'dashboard'
-			]
+			Finance: ['finance', 'financier', 'financiere', 'financiers', 'bancaire', 'banque', 'argent', 'gestion', 'business', 'budget', 'cout', 'couts', 'comptabilite', 'compta', 'analyse financiere', 'performance', 'pilotage', 'decision', 'reporting', 'mbfa'],
+			Data: ['data', 'donnee', 'donnees', 'dataset', 'analytics', 'analytique', 'analyse', 'statistiques', 'stats', 'econometrie', 'machine learning', 'ml', 'ia', 'ai', 'bi', 'dashboard', 'visualisation', 'dataviz', 'base de donnees', 'bdd', 'database', 'sql', 'mysql', 'entrepot', 'historisation', 'tracabilite', 'prevision'],
+			Informatique: ['informatique', 'tech', 'technique', 'developpement', 'developpeur', 'dev', 'programmation', 'code', 'logiciel', 'application', 'web', 'backend', 'frontend', 'script', 'software', 'algorithmique', 'systeme', 'reseau', 'securite', 'bases', 'bdd', 'database'],
+			Cloud: ['cloud', 'devops', 'infra', 'infrastructure', 'ops', 'plateforme', 'platform', 'kubernetes', 'k8s', 'kubectl', 'helm', 'orchestration', 'conteneur', 'conteneurs', 'container', 'containers', 'deploiement', 'deployment', 'observabilite', 'run', 'sre'],
+			Autres: ['gestion', 'pilotage', 'decision', 'gouvernance', 'juridique', 'conformite', 'management', 'organisation', 'tableau de bord', 'dashboard']
 		};
 
 		const experienceAliases = {
-			"Licence d'economie": [
-				'licence', 'universite', 'faculte', 'academique', 'fondamentaux', 'socle',
-				'economie', 'eco', 'formation initiale'
-			],
-			"Master - Systeme d'Information Economique et Financier": [
-				'master', 'sief', 'mbfa', 'specialisation', 'avance', 'expertise',
-				'universite', 'faculte', 'formation specialisee'
-			],
-			"FinOps (Stage)": [
-				'septeo', 'stage', 'entreprise', 'professionnel', 'pro', 'finops',
-				'experience', 'metier', 'infrastructure', 'cloud'
-			]
+			"Licence d'economie": ['licence', 'universite', 'faculte', 'academique', 'fondamentaux', 'socle', 'economie', 'eco', 'formation initiale'],
+			"Master - Systeme d'Information Economique et Financier": ['master', 'sief', 'mbfa', 'specialisation', 'avance', 'expertise', 'universite', 'faculte', 'formation specialisee'],
+			"FinOps (Stage)": ['septeo', 'stage', 'entreprise', 'professionnel', 'pro', 'finops', 'experience', 'metier', 'infrastructure', 'cloud']
 		};
 
 		const serviceAliases = {
@@ -273,20 +331,8 @@
 				...(establishmentAliases[row.etablissement] || []),
 				...(competenceAliases[row.competence] || [])
 			];
-
-			const joined = [
-				row.competence,
-				row.categorie,
-				row.metier,
-				row.service,
-				row.etablissement,
-				...aliases
-			].join(' ');
-
-			return {
-				text: normalize(joined),
-				tokens: tokenize(joined)
-			};
+			const joined = [row.competence, row.categorie, row.metier, row.service, row.etablissement, ...aliases].join(' ');
+			return { text: normalize(joined), tokens: tokenize(joined) };
 		}
 
 		const indexedSkills = skillsData.map((skill) => {
@@ -301,97 +347,79 @@
 				_serviceNormalized: normalize(skill.service),
 				_etablissementNormalized: normalize(skill.etablissement)
 			};
-		});
+		
+
+});
 
 		function compareAlphabetically(a, b) {
 			return a.competence.localeCompare(b.competence, 'fr', { sensitivity: 'base' });
 		}
 
+		function levenshtein(a, b) {
+			if (a === b) return 0;
+			if (!a.length) return b.length;
+			if (!b.length) return a.length;
+			const matrix = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+			for (let i = 0; i <= a.length; i += 1) matrix[i][0] = i;
+			for (let j = 0; j <= b.length; j += 1) matrix[0][j] = j;
+			for (let i = 1; i <= a.length; i += 1) {
+				for (let j = 1; j <= b.length; j += 1) {
+					const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+					matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+				}
+			}
+			return matrix[a.length][b.length];
+		}
+
+		function fuzzyTokenMatch(token, candidates) {
+			return candidates.some((candidate) => {
+				if (!candidate || candidate.length < 3) return false;
+				if (candidate === token) return true;
+				if (token.length >= 4 && candidate.includes(token)) return true;
+				if (token.length >= 3 && candidate.startsWith(token)) return true;
+				if (Math.abs(candidate.length - token.length) > 2) return false;
+				const maxDistance = token.length >= 9 ? 2 : token.length >= 5 ? 1 : 0;
+				return maxDistance > 0 && levenshtein(token, candidate) <= maxDistance;
+			});
+		}
+
 		function tokenMatchesField(token, fieldValue) {
 			if (!fieldValue) return false;
-			if (fieldValue === token) return true;
-			if (fieldValue.includes(token)) return true;
+			if (fieldValue === token || fieldValue.includes(token)) return true;
 			return fuzzyTokenMatch(token, tokenize(fieldValue));
+		}
+
+		function getSkillMatchScore(row, query) {
+			const cleanedQuery = normalize(query);
+			if (!cleanedQuery) return { priority: 99, subPriority: 0 };
+			const queryTokens = tokenize(query);
+			if (!queryTokens.length) return null;
+			if (row._competenceNormalized === cleanedQuery) return { priority: 0, subPriority: 0 };
+			if (row._categorieNormalized === cleanedQuery) return { priority: 1, subPriority: 0 };
+			if (row._metierNormalized === cleanedQuery || row._serviceNormalized === cleanedQuery || row._etablissementNormalized === cleanedQuery) {
+				return { priority: 2, subPriority: 0 };
+			}
+			const tokenScores = queryTokens.map((token) => {
+				if (tokenMatchesField(token, row._competenceNormalized)) return 0;
+				if (tokenMatchesField(token, row._categorieNormalized)) return 1;
+				if (tokenMatchesField(token, row._metierNormalized) || tokenMatchesField(token, row._serviceNormalized) || tokenMatchesField(token, row._etablissementNormalized)) return 2;
+				if (fuzzyTokenMatch(token, row._searchTokens) || row._searchText.includes(token)) return 3;
+				return null;
+			});
+			if (tokenScores.some((score) => score === null)) return null;
+			return { priority: Math.min(...tokenScores), subPriority: tokenScores.reduce((sum, score) => sum + score, 0) };
 		}
 
 		function rowMatches(row, query) {
 			return getSkillMatchScore(row, query) !== null;
 		}
 
-		function getSkillMatchScore(row, query) {
-			const cleanedQuery = normalize(query);
-			if (!cleanedQuery) {
-				return {
-					priority: 99,
-					subPriority: 0,
-					label: row.competence.toLowerCase()
-				};
-			}
-
-			const queryTokens = tokenize(query);
-			if (!queryTokens.length) return null;
-
-			const competenceExact = row._competenceNormalized === cleanedQuery;
-			const categorieExact = row._categorieNormalized === cleanedQuery;
-			const metierExact = row._metierNormalized === cleanedQuery;
-			const serviceExact = row._serviceNormalized === cleanedQuery;
-			const etablissementExact = row._etablissementNormalized === cleanedQuery;
-
-			if (competenceExact) {
-				return {
-					priority: 0,
-					subPriority: 0,
-					label: row.competence.toLowerCase()
-				};
-			}
-
-			if (categorieExact) {
-				return {
-					priority: 1,
-					subPriority: 0,
-					label: row.competence.toLowerCase()
-				};
-			}
-
-			if (metierExact || serviceExact || etablissementExact) {
-				return {
-					priority: 2,
-					subPriority: 0,
-					label: row.competence.toLowerCase()
-				};
-			}
-
-			const tokenScores = queryTokens.map((token) => {
-				if (tokenMatchesField(token, row._competenceNormalized)) return 0;
-				if (tokenMatchesField(token, row._categorieNormalized)) return 1;
-				if (
-					tokenMatchesField(token, row._metierNormalized) ||
-					tokenMatchesField(token, row._serviceNormalized) ||
-					tokenMatchesField(token, row._etablissementNormalized)
-				) return 2;
-				if (fuzzyTokenMatch(token, row._searchTokens) || row._searchText.includes(token)) return 3;
-				return null;
-			});
-
-			if (tokenScores.some((score) => score === null)) return null;
-
-			return {
-				priority: Math.min(...tokenScores),
-				subPriority: tokenScores.reduce((sum, score) => sum + score, 0),
-				label: row.competence.toLowerCase()
-			};
-		}
-
 		function sortSkillsByRelevance(data, query) {
 			const cleanedQuery = normalize(query);
-			if (!cleanedQuery) {
-				return [...data].sort(compareAlphabetically);
-			}
-
+			if (!cleanedQuery) return [...data].sort(compareAlphabetically);
 			return [...data].sort((a, b) => {
 				const scoreA = getSkillMatchScore(a, query);
 				const scoreB = getSkillMatchScore(b, query);
-
 				if (!scoreA && !scoreB) return compareAlphabetically(a, b);
 				if (!scoreA) return 1;
 				if (!scoreB) return -1;
@@ -401,119 +429,133 @@
 			});
 		}
 
-		function renderDomainChart() {
-			const container = document.getElementById('domain-chart');
-			if (!container) return;
+		function renderCharts() {
+			if (!window.Chart) return;
+			const textColor = getCssVariable('--text', '#122033');
+			const mutedColor = getCssVariable('--muted', '#5e6f84');
+			const gridColor = 'rgba(103, 146, 189, 0.18)';
 
-			const counts = Object.entries(aggregateByCategory(skillsData)).sort((a, b) => b[1] - a[1]);
-			const max = Math.max(...counts.map(([, value]) => value));
-
-			container.innerHTML = counts.map(([label, value]) => `
-				<div class="competences-ligne-barre">
-					<div class="competences-etiquettes-barre">
-						<span>${escapeHtml(label)}</span>
-						<strong>${value}</strong>
-					</div>
-					<div class="competences-piste-barre">
-						<span class="competences-barre-remplissage" style="--bar-width:${(value / max) * 100}%; background:${safeCssColor(categoryColors[label], '#123f73')};"></span>
-					</div>
-				</div>
-			`).join('');
-		}
-
-		function renderTechnicalChart() {
-			const container = document.getElementById('technical-chart');
-			const legend = document.getElementById('technical-legend');
-			if (!container || !legend) return;
-
-			const labels = ['Data', 'Informatique', 'Cloud'];
-			const counts = aggregateByCategory(skillsData);
-			const total = labels.reduce((sum, label) => sum + (counts[label] || 0), 0);
-
-			let current = 0;
-			const segments = labels.map((label) => {
-				const value = counts[label] || 0;
-				const angle = total ? (value / total) * 360 : 0;
-				const start = current;
-				current += angle;
-
-				return {
-					label,
-					value,
-					percentage: total ? (value / total) * 100 : 0,
-					start,
-					end: current
-				};
+			const domainEntries = Object.entries(aggregateByCategory(skillsData)).sort((a, b) => b[1] - a[1]);
+			const domainLabels = domainEntries.map(([label]) => label);
+			const domainValues = domainEntries.map(([, value]) => value);
+			const domainChart = registerChart(document.getElementById('domain-chart'), {
+				type: 'bar',
+				data: {
+					labels: domainLabels,
+					datasets: [{
+						data: createZeroData(domainValues),
+						backgroundColor: domainLabels.map((label) => categoryColors[label] || '#123f73'),
+						borderRadius: 999,
+						barThickness: 18,
+						borderSkipped: false
+					}]
+				},
+				options: {
+					...commonChartOptions(),
+					indexAxis: 'y',
+					scales: {
+						x: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: mutedColor, precision: 0 } },
+						y: { grid: { display: false }, ticks: { color: textColor, font: { weight: '700' } } }
+					}
+				}
 			});
+			queueChartAnimation(domainChart, [domainValues]);
 
-			const gradient = segments
-				.map((segment) => `${safeCssColor(categoryColors[segment.label])} ${segment.start}deg ${segment.end}deg`)
-				.join(', ');
+			const technicalLabels = ['Data', 'Informatique', 'Cloud'];
+			const technicalCounts = aggregateByCategory(skillsData);
+			const technicalValues = technicalLabels.map((label) => technicalCounts[label] || 0);
+			const technicalTotal = technicalValues.reduce((sum, value) => sum + value, 0);
 
-			container.style.background = `conic-gradient(${gradient})`;
-			container.innerHTML = '<div class="competences-centre-anneau"><strong>' + total + '</strong></div>';
+			const technicalChart = registerChart(document.getElementById('technical-chart'), {
+				type: 'doughnut',
+				data: {
+					labels: technicalLabels,
+					datasets: [{
+						data: createZeroData(technicalValues),
+						backgroundColor: technicalLabels.map((label) => categoryColors[label]),
+						borderWidth: 0,
+						hoverOffset: 6
+					}]
+				},
+				options: { ...commonChartOptions(), cutout: '66%' },
+				plugins: [createCenterTextPlugin(technicalTotal, 'total')]
+			});
+			queueChartAnimation(technicalChart, [technicalValues]);
 
-			legend.innerHTML = segments.map((segment) => `
-				<div class="competences-element-legende">
-					<span class="competences-echantillon-legende" style="background:${safeCssColor(categoryColors[segment.label])};"></span>
-					<div>
-						<strong>${escapeHtml(segment.label)}</strong>
-						<span>${segment.value} · ${segment.percentage.toFixed(1).replace('.', ',')} %</span>
-					</div>
-				</div>
-			`).join('');
-		}
-
-		function renderExperienceChart() {
-			const container = document.getElementById('experience-chart');
-			const legend = document.getElementById('experience-legend');
-			if (!container || !legend) return;
-
-			const order = [
-				"Licence d'economie",
-				"Master - Systeme d'Information Economique et Financier",
-				'FinOps (Stage)'
-			];
-
-			const categories = ['Finance', 'Data', 'Informatique', 'Cloud', 'Autres'];
-			const counts = aggregateByExperience(skillsData);
-
-			const totals = order.map((label) =>
-				categories.reduce((sum, category) => sum + ((counts[label] && counts[label][category]) || 0), 0)
+			renderLegend(
+				document.getElementById('technical-legend'),
+				technicalLabels.map((label, index) => ({
+					label,
+					value: `${technicalValues[index]} · ${technicalTotal ? ((technicalValues[index] / technicalTotal) * 100).toFixed(1).replace('.', ',') : '0,0'} %`,
+					color: categoryColors[label]
+				}))
 			);
 
-			const max = Math.max(...totals);
+			const order = ["Licence d'economie", "Master - Systeme d'Information Economique et Financier", 'FinOps (Stage)'];
+			const categories = ['Finance', 'Data', 'Informatique', 'Cloud', 'Autres'];
+			const counts = aggregateByExperience(skillsData);
+			const datasets = categories.map((category) => ({
+				label: category,
+				data: order.map((experience) => (counts[experience] && counts[experience][category]) || 0),
+				backgroundColor: categoryColors[category] || '#123f73',
+				borderRadius: 0,
+				borderSkipped: false,
+				barThickness: 22,
+				categoryPercentage: 0.68,
+				barPercentage: 0.96,
+				stack: 'experience'
+			}));
 
-			container.innerHTML = order.map((label, index) => {
-				const total = totals[index];
+			const experienceChart = registerChart(document.getElementById('experience-chart'), {
+				type: 'bar',
+				data: {
+					labels: order.map((experience) => experienceShortLabels[experience]),
+					datasets: datasets.map((dataset) => ({ ...dataset, data: createZeroData(dataset.data) }))
+				},
+				options: {
+					...commonChartOptions(),
+					indexAxis: 'y',
+					plugins: {
+						...commonChartOptions().plugins,
+						legend: { display: false },
+						tooltip: {
+							...commonChartOptions().plugins.tooltip,
+							callbacks: {
+								label(context) {
+									const value = context.parsed.x || 0;
+									return `${context.dataset.label} : ${value}`;
+								},
+								footer(items) {
+									const total = items.reduce((sum, item) => sum + (item.parsed.x || 0), 0);
+									return `Total : ${total}`;
+								}
+							}
+						}
+					},
+					scales: {
+						x: {
+						beginAtZero: true,
+						stacked: true,
+						grid: { color: gridColor },
+						ticks: { color: mutedColor, precision: 0 },
+						border: { display: false }
+					},
+						y: {
+						stacked: true,
+						grid: { display: false },
+						ticks: { color: textColor, font: { weight: '700' } },
+						border: { display: false }
+					}
+					}
+				}
+			});
+			queueChartAnimation(experienceChart, datasets.map((dataset) => dataset.data));
 
-				const stacks = categories.map((category) => {
-					const value = (counts[label] && counts[label][category]) || 0;
-					if (!value) return '';
-					return `
-						<span
-							class="competences-partie-pile"
-							style="--stack-height:${(value / max) * 100}%; background:${safeCssColor(categoryColors[category])};"
-							title="${escapeHtml(category)} : ${value}"
-						></span>
-					`;
-				}).join('');
-
-				return `
-					<div class="competences-colonne-pile">
-						<div class="competences-barre-pile">${stacks}</div>
-						<strong>${total}</strong>
-						<span>${escapeHtml(experienceShortLabels[label])}</span>
-					</div>
-				`;
-			}).join('');
-
-			legend.innerHTML = categories.map((category) => `
-				<div class="competences-etiquette-legende">
-					<span class="competences-echantillon-legende" style="background:${safeCssColor(categoryColors[category])};"></span>
-					<span>${escapeHtml(category)}</span>
-				</div>
-			`).join('');
+			renderLegend(
+				document.getElementById('experience-legend'),
+				categories.map((category) => ({ label: category, color: categoryColors[category] || '#123f73' })),
+				'inline'
+			);
 		}
 
 		const tableBody = document.getElementById('skills-table-body');
@@ -533,7 +575,6 @@
 
 		function renderTable(data) {
 			if (!tableBody) return;
-
 			if (!data.length) {
 				tableBody.innerHTML = `
 					<tr>
@@ -547,7 +588,6 @@
 				`;
 				return;
 			}
-
 			tableBody.innerHTML = data.map((skill, index) => `
 				<tr>
 					<td>
@@ -557,31 +597,32 @@
 						</div>
 					</td>
 					<td class="competences-cellule-action">
-						<button
-							class="competences-bouton-info"
-							type="button"
-							data-index="${index}"
-							aria-label="Afficher le détail de ${escapeHtml(skill.competence)}"
-						>i</button>
+						<button class="competences-bouton-info" type="button" data-index="${index}" aria-label="Afficher le détail de ${escapeHtml(skill.competence)}">i</button>
 					</td>
 				</tr>
 			`).join('');
-
-			tableBody.querySelectorAll('.competences-bouton-info').forEach((bouton) => {
-				bouton.addEventListener('click', () => {
-					openSkillModal(data[Number(bouton.dataset.index)]);
-				});
+			tableBody.querySelectorAll('.competences-bouton-info').forEach((button) => {
+				button.addEventListener('click', () => openSkillModal(data[Number(button.dataset.index)]));
 			});
 		}
 
 		function updateResultsCount(count) {
-			if (!resultsLabel) return;
-			resultsLabel.textContent = `${count} compétence${count > 1 ? 's' : ''} affichée${count > 1 ? 's' : ''}`;
+			if (resultsLabel) resultsLabel.textContent = `${count} compétence${count > 1 ? 's' : ''} affichée${count > 1 ? 's' : ''}`;
 		}
 
 		function filterSkills() {
 			const query = searchInput.value;
+			const cleanedQuery = normalize(query);
+
+			if (!cleanedQuery) {
+				const sortedAll = sortSkillsByRelevance(indexedSkills, query);
+				renderTable(sortedAll);
+				updateResultsCount(sortedAll.length);
+				return;
+			}
+
 			const filtered = indexedSkills.filter((row) => rowMatches(row, query));
+
 			const sorted = sortSkillsByRelevance(filtered, query);
 			renderTable(sorted);
 			updateResultsCount(sorted.length);
@@ -594,28 +635,19 @@
 		}
 
 		searchInput.addEventListener('input', filterSkills);
-
 		resetButton.addEventListener('click', () => {
 			searchInput.value = '';
 			filterSkills();
 			searchInput.focus();
 		});
-
 		modal.addEventListener('click', (event) => {
 			const rect = modal.getBoundingClientRect();
-			const inDialog = (
-				rect.top <= event.clientY &&
-				event.clientY <= rect.top + rect.height &&
-				rect.left <= event.clientX &&
-				event.clientX <= rect.left + rect.width
-			);
+			const inDialog = rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width;
 			if (!inDialog) modal.close();
 		});
 
 		initSummary();
-		renderDomainChart();
-		renderTechnicalChart();
-		renderExperienceChart();
+		renderCharts();
 		filterSkills();
 		animerChargementTableaux([
 			document.getElementById('domain-chart') && document.getElementById('domain-chart').closest('.competences-carte-graphe'),
@@ -625,116 +657,70 @@
 	}
 
 	function initFormationPage() {
+		if (!window.Chart) return;
 		const formationConfigs = [
-			{
-				metier: 'FinOps (Stage)',
-				prefix: 'stage'
-			},
-			{
-				metier: "Master - Systeme d'Information Economique et Financier",
-				prefix: 'master'
-			},
-			{
-				metier: "Licence d'economie",
-				prefix: 'licence'
-			}
+			{ metier: 'FinOps (Stage)', prefix: 'stage' },
+			{ metier: "Master - Systeme d'Information Economique et Financier", prefix: 'master' },
+			{ metier: "Licence d'economie", prefix: 'licence' }
 		];
-
-		const macroColors = {
-			economie: '#8f1d3f',
-			informatique: '#1f6b45'
-		};
-
-		const macroLabels = {
-			economie: 'Économie / Finance',
-			informatique: 'Informatique / Data / Cloud'
-		};
+		const macroColors = { economie: '#8f1d3f', informatique: '#1f6b45' };
+		const macroLabels = { economie: 'Économie / Finance', informatique: 'Informatique / Data / Cloud' };
+		const gridColor = 'rgba(103, 146, 189, 0.18)';
+		const textColor = getCssVariable('--text', '#122033');
+		const mutedColor = getCssVariable('--muted', '#5e6f84');
+		const categories = ['Finance', 'Data', 'Informatique', 'Cloud', 'Autres'];
 
 		function renderMacroDonut(donutId, legendId, rows) {
-			const donut = document.getElementById(donutId);
-			const legend = document.getElementById(legendId);
-			if (!donut || !legend) return;
-
-			const counts = {
-				economie: 0,
-				informatique: 0
-			};
-
+			const counts = { economie: 0, informatique: 0 };
 			rows.forEach((row) => {
-				if (['Finance', 'Autres'].includes(row.categorie)) {
-					counts.economie += 1;
-				} else {
-					counts.informatique += 1;
-				}
+				if (['Finance', 'Autres'].includes(row.categorie)) counts.economie += 1;
+				else counts.informatique += 1;
 			});
-
-			const total = rows.length || 1;
-			const ecoAngle = (counts.economie / total) * 360;
-			const infAngle = 360 - ecoAngle;
-
-			donut.style.background = `conic-gradient(
-				${macroColors.economie} 0deg ${ecoAngle}deg,
-				${macroColors.informatique} ${ecoAngle}deg ${ecoAngle + infAngle}deg
-			)`;
-
-			donut.innerHTML = `
-				<div class="formation-centre-anneau">
-					<strong>${rows.length}</strong>
-				</div>
-			`;
-
-			const macroData = [
-				{
-					key: 'economie',
-					value: counts.economie
+			const macroChart = registerChart(document.getElementById(donutId), {
+				type: 'doughnut',
+				data: {
+					labels: [macroLabels.economie, macroLabels.informatique],
+					datasets: [{
+						data: createZeroData([counts.economie, counts.informatique]),
+						backgroundColor: [macroColors.economie, macroColors.informatique],
+						borderWidth: 0,
+						hoverOffset: 6
+					}]
 				},
-				{
-					key: 'informatique',
-					value: counts.informatique
-				}
-			];
-
-			legend.innerHTML = macroData.map((item) => {
-				const percentage = rows.length ? ((item.value / rows.length) * 100).toFixed(1).replace('.', ',') : '0,0';
-				return `
-					<div class="formation-element-legende">
-						<span class="formation-pastille-legende" style="background:${macroColors[item.key]};"></span>
-						<div>
-							<strong>${escapeHtml(macroLabels[item.key])}</strong>
-							<span>${item.value} · ${percentage} %</span>
-						</div>
-					</div>
-				`;
-			}).join('');
+				options: { ...commonChartOptions(), cutout: '66%' },
+				plugins: [createCenterTextPlugin(rows.length, 'total')]
+			});
+			queueChartAnimation(macroChart, [[counts.economie, counts.informatique]]);
+			renderLegend(document.getElementById(legendId), [
+				{ label: macroLabels.economie, value: `${counts.economie} · ${rows.length ? ((counts.economie / rows.length) * 100).toFixed(1).replace('.', ',') : '0,0'} %`, color: macroColors.economie },
+				{ label: macroLabels.informatique, value: `${counts.informatique} · ${rows.length ? ((counts.informatique / rows.length) * 100).toFixed(1).replace('.', ',') : '0,0'} %`, color: macroColors.informatique }
+			], 'formation');
 		}
 
 		function renderCategoryBars(containerId, rows) {
-			const container = document.getElementById(containerId);
-			if (!container) return;
-
-			const categories = ['Finance', 'Data', 'Informatique', 'Cloud', 'Autres'];
-
-			const counts = categories.reduce((acc, category) => {
-				acc[category] = rows.filter((row) => row.categorie === category).length;
-				return acc;
-			}, {});
-
-			container.innerHTML = categories.map((category) => {
-				const value = counts[category];
-				const percentage = rows.length ? (value / rows.length) * 100 : 0;
-
-				return `
-					<div class="formation-ligne-barre">
-						<div class="formation-infos-barre">
-							<span>${escapeHtml(category)}</span>
-							<strong>${value} · ${percentage.toFixed(1).replace('.', ',')} %</strong>
-						</div>
-						<div class="formation-piste-barre">
-							<span class="formation-barre-remplissage" style="--bar-width:${percentage}%; background:${safeCssColor(categoryColors[category])};"></span>
-						</div>
-					</div>
-				`;
-			}).join('');
+			const categoryValues = categories.map((category) => rows.filter((row) => row.categorie === category).length);
+			const categoryChart = registerChart(document.getElementById(containerId), {
+				type: 'bar',
+				data: {
+					labels: categories,
+					datasets: [{
+						data: createZeroData(categoryValues),
+						backgroundColor: categories.map((category) => categoryColors[category]),
+						borderRadius: 999,
+						barThickness: 16,
+						borderSkipped: false
+					}]
+				},
+				options: {
+					...commonChartOptions(),
+					indexAxis: 'y',
+					scales: {
+						x: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: mutedColor, precision: 0 } },
+						y: { grid: { display: false }, ticks: { color: textColor, font: { weight: '700' } } }
+					}
+				}
+			});
+			queueChartAnimation(categoryChart, [categoryValues]);
 		}
 
 		function renderTags(containerId, rows) {
@@ -754,15 +740,8 @@
 		animerChargementTableaux(Array.from(document.querySelectorAll('.formation-carte .formation-bloc')));
 	}
 
-	if (currentPage === 'index') {
-		initPageAccueil();
-	}
-
-	if (currentPage === 'competences') {
-		initCompetencesPage();
-	}
-
-	if (currentPage === 'formation') {
-		initFormationPage();
-	}
+	destroyCharts();
+	if (currentPage === 'index') initPageAccueil();
+	if (currentPage === 'competences') initCompetencesPage();
+	if (currentPage === 'formation') initFormationPage();
 })();

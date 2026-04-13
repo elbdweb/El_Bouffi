@@ -3,7 +3,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8"/>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
 		<meta content="Portfolio de Driss El Bouffi, profil orienté data, finance, analyse et développement." name="description"/>
 		<title>Driss El Bouffi — Portfolio</title>
 		<link href="FrontPic/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -40,12 +40,7 @@
 							<p class="texte-graphe-domaine">
 								Répartition des compétences Data par formation : licence, master et expérience de stage.
 							</p>
-							<div aria-hidden="true" class="anneau-domaine anneau-domaine-donnees">
-								<div class="centre-anneau-domaine">
-									<strong>26</strong>
-									<span>compétences</span>
-								</div>
-							</div>
+							<div class="conteneur-graphe-anneau-domaine"><canvas aria-label="Répartition des compétences Data par formation" class="graphe-anneau-domaine" id="index-chart-data"></canvas></div>
 							<div aria-label="Répartition des compétences Data par formation" class="legende-anneau-domaine">
 								<div class="element-legende-anneau-domaine">
 									<span class="pastille-domaine pastille-domaine-licence"></span>
@@ -69,12 +64,7 @@
 							<p class="texte-graphe-domaine">
 								Répartition des compétences Informatiques et cloud par formation : licence, master et expérience de stage.
 							</p>
-							<div aria-hidden="true" class="anneau-domaine anneau-domaine-informatique">
-								<div class="centre-anneau-domaine">
-									<strong>26</strong>
-									<span>compétences</span>
-								</div>
-							</div>
+							<div class="conteneur-graphe-anneau-domaine"><canvas aria-label="Répartition des compétences Informatiques et cloud par formation" class="graphe-anneau-domaine" id="index-chart-informatique"></canvas></div>
 							<div aria-label="Répartition des compétences Informatiques et cloud par formation" class="legende-anneau-domaine">
 								<div class="element-legende-anneau-domaine">
 									<span class="pastille-domaine pastille-domaine-licence"></span>
@@ -98,12 +88,7 @@
 							<p class="texte-graphe-domaine">
 								Répartition des compétences Finance par formation : licence, master et expérience de stage.
 							</p>
-							<div aria-hidden="true" class="anneau-domaine anneau-domaine-finance">
-								<div class="centre-anneau-domaine">
-									<strong>18</strong>
-									<span>compétences</span>
-								</div>
-							</div>
+							<div class="conteneur-graphe-anneau-domaine"><canvas aria-label="Répartition des compétences Finance par formation" class="graphe-anneau-domaine" id="index-chart-finance"></canvas></div>
 							<div aria-label="Répartition des compétences Finance par formation" class="legende-anneau-domaine">
 								<div class="element-legende-anneau-domaine">
 									<span class="pastille-domaine pastille-domaine-licence"></span>
@@ -251,11 +236,12 @@
 						<a href="contact.html">Contact</a>
 						<a href="https://www.linkedin.com/in/driss-el-bouffi-25a394316" referrerpolicy="strict-origin-when-cross-origin" rel="noopener noreferrer" target="_blank">LinkedIn</a>
 					</div>
-					<div class="version-accueil">v2.4.9</div>
+					<div class="version-accueil">v2.5.0</div>
 				</div>
 			</main>
 		</div>
 		<script src="assets/js/layout.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 		<script src="assets/js/portfolio-data.js"></script>
 		<script src="assets/js/page-modules.js"></script>
 	</body>

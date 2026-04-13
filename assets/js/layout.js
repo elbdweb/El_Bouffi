@@ -178,8 +178,8 @@ async function injectSidebar() {
 	setupNavigation();
 	setupSidebarGif();
 	setupReveal();
-	hardenExternalLinks(document);
 }
+
 
 function setupNavigation() {
 	const currentPage = document.body.dataset.page;
@@ -201,16 +201,39 @@ function setupNavigation() {
 	const panneau = document.querySelector('.panneau-barre-laterale');
 	if (!toggle || !panneau) return;
 
+	function openNavigation() {
+		panneau.classList.add('est-ouvert');
+		toggle.setAttribute('aria-expanded', 'true');
+		document.body.classList.add('sidebar-ouverte');
+	}
+
+	function closeNavigation() {
+		panneau.classList.remove('est-ouvert');
+		toggle.setAttribute('aria-expanded', 'false');
+		document.body.classList.remove('sidebar-ouverte');
+	}
+
 	toggle.addEventListener('click', () => {
-		const isOpen = panneau.classList.toggle('est-ouvert');
-		toggle.setAttribute('aria-expanded', String(isOpen));
+		const isOpen = panneau.classList.contains('est-ouvert');
+		if (isOpen) closeNavigation();
+		else openNavigation();
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape' && panneau.classList.contains('est-ouvert')) {
+			closeNavigation();
+			toggle.focus();
+		}
+	});
+
+	window.addEventListener('resize', () => {
+		if (!window.matchMedia('(max-width: 980px)').matches) {
+			closeNavigation();
+		}
 	});
 
 	panneau.querySelectorAll('a[href]').forEach((link) => {
-		link.addEventListener('click', () => {
-			panneau.classList.remove('est-ouvert');
-			toggle.setAttribute('aria-expanded', 'false');
-		});
+		link.addEventListener('click', closeNavigation);
 	});
 }
 
@@ -225,22 +248,23 @@ function setupSidebarGif() {
 }
 
 function setupReveal() {
-	const revealItems = document.querySelectorAll('[data-reveal]');
-	if (!('IntersectionObserver' in window) || !revealItems.length) {
-		revealItems.forEach((item) => item.classList.add('est-visible'));
-		return;
-	}
+	const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+	if (!revealItems.length) return;
 
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add('est-visible');
-				observer.unobserve(entry.target);
-			}
+	const revealStep = 90;
+	const revealMaxDelay = 540;
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	revealItems.forEach((item, index) => {
+		const delay = reduceMotion ? 0 : Math.min(index * revealStep, revealMaxDelay);
+		item.style.transitionDelay = `${delay}ms`;
+	});
+
+	requestAnimationFrame(() => {
+		requestAnimationFrame(() => {
+			revealItems.forEach((item) => item.classList.add('est-visible'));
 		});
-	}, { threshold: 0.02 });
-
-	revealItems.forEach((item) => observer.observe(item));
+	});
 }
 
 hardenExternalLinks(document);

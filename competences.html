@@ -3,7 +3,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="utf-8"/>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/><meta content="strict-origin-when-cross-origin" name="referrer"/>
 		<meta content="Compétences techniques, analytiques et métiers de Driss El Bouffi." name="description"/>
 		<title>Driss El Bouffi — Compétences</title>
 		<link href="FrontPic/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -50,7 +50,7 @@
 									<h2 class="carte-titre">Répartition des compétences par domaine</h2>
 								</div>
 							</div>
-							<div aria-label="Répartition des compétences par domaine" class="competences-barres" id="domain-chart"></div>
+							<div class="conteneur-graphe"><canvas aria-label="Répartition des compétences par domaine" id="domain-chart"></canvas></div>
 						</article>
 						<article class="panneau competences-carte-graphe">
 							<div class="competences-entete-carte">
@@ -61,7 +61,7 @@
 								</div>
 							</div>
 							<div class="competences-mise-page-anneau">
-								<div aria-hidden="true" class="competences-anneau" id="technical-chart"></div>
+								<div class="conteneur-graphe-anneau"><canvas aria-label="Répartition du socle technique" id="technical-chart"></canvas></div>
 								<div aria-label="Légende du socle technique" class="competences-legende" id="technical-legend"></div>
 							</div>
 						</article>
@@ -72,11 +72,11 @@
 									<h2 class="carte-titre">Compétences acquises par expérience</h2>
 								</div>
 							</div>
-							<div aria-label="Compétences acquises par expérience" class="competences-empile" id="experience-chart"></div>
+							<div class="conteneur-graphe conteneur-graphe-haut"><canvas aria-label="Compétences acquises par expérience" id="experience-chart"></canvas></div>
 							<div aria-label="Légende des catégories" class="competences-legende competences-legende-en-ligne" id="experience-legend"></div>
 						</article>
 					</section>
-					<section class="panneau competences-panneau">
+					<section class="panneau competences-panneau" data-reveal="">
 						<div class="competences-entete-panneau">
 							<div>
 								<h2 class="titre-section">Explorer les compétences</h2>
@@ -139,6 +139,7 @@
 			</form>
 		</dialog>
 		<script src="assets/js/layout.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 		<script src="assets/js/portfolio-data.js"></script>
 		<script src="assets/js/page-modules.js"></script>
 	</body>
