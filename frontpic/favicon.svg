@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"></stop>
+      <stop offset="100%" stop-color="#14b8a6"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- fond -->
+  <rect width="64" height="64" rx="14" fill="#0f172a"></rect>
+
+  <!-- cadre dégradé subtil -->
+  <rect x="5" y="5" width="54" height="54" rx="12" fill="url(#grad)" opacity="0.18"></rect>
+
+  <!-- cercle -->
+  <circle cx="32" cy="32" r="20" fill="none" stroke="url(#grad)" stroke-width="2"></circle>
+
+  <!-- D -->
+  <path d="M22 18h10c9 0 15 6 15 14s-6 14-15 14H22zM31 42c6 0 9-4 9-10s-3-10-9-10h-2v20z" fill="#ffffff"></path>
+
+  <!-- accent data -->
+  <rect x="41" y="36" width="3" height="7" fill="#14b8a6"></rect>
+  <rect x="46" y="33" width="3" height="10" fill="#2563eb"></rect>
+
+</svg>
